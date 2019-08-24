@@ -15,7 +15,13 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="G3D_Core_Uart.ino" />
+    <None Include="src\arduino folders read me.txt">
+      <Filter>Misc Files</Filter>
+    </None>
   </ItemGroup>
- 
+  <ItemGroup>
+    <ClInclude Include="__vm\.G3D.Core.Uart.vsarduino.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
 </Project>
