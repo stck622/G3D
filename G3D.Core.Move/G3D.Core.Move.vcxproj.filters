@@ -15,11 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="G3D.Core.Lcd.ino" />
+    <None Include="G3D_Core_Move.ino" />
   </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="__vm\.G3D.Core.Lcd.vsarduino.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-  </ItemGroup>
+ 
 </Project>
