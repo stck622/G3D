@@ -15,7 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="G3D_Core_Uart.ino" />
+    <None Include="G3D.Core.Uart.ino" />
   </ItemGroup>
- 
 </Project>
