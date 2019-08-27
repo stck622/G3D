@@ -13,16 +13,46 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>xml;json;txt;rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Termister">
+      <UniqueIdentifier>{be1a2126-4c2e-4764-b6ff-fecea7a8bf5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core">
+      <UniqueIdentifier>{81f5c21d-a766-4a71-a53d-52f15b1b9446}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Heater">
+      <UniqueIdentifier>{091f831c-6dc7-4b7d-ba1c-3a9913ebbad4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="StepMotor">
+      <UniqueIdentifier>{f00f9757-ee00-4ec9-b771-1ad5c582538e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EndStop">
+      <UniqueIdentifier>{55393dde-6707-4dac-abe7-fca28c511f6b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="G3D.FIRMWARE.ino" />
+    <None Include="G3D.Firmware.ino" />
     <None Include="src\arduino folders read me.txt">
       <Filter>Misc Files</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="__vm\.G3D.FIRMWARE.vsarduino.h">
+    <ClInclude Include="__vm\.G3D.Firmware.vsarduino.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="termister.h">
+      <Filter>Termister</Filter>
+    </ClInclude>
+    <ClInclude Include="PINMAP.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="heater.h">
+      <Filter>Heater</Filter>
+    </ClInclude>
+    <ClInclude Include="stepmotor.h">
+      <Filter>StepMotor</Filter>
+    </ClInclude>
+    <ClInclude Include="EndStop.h">
+      <Filter>EndStop</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
