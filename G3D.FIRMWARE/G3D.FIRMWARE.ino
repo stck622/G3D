@@ -8,12 +8,15 @@ void setup() {
 	heater_init();
 	endstop_init();
 	step_init();
+	X_GOAL = 100000;
 }
+
+bool flag = true;
 
 // the loop function runs over and over again until power down or reset
 void loop() { //30 ~ 50
-	
-	delay(500);
-	step_lock('a',true);
+
+
+
 
 }

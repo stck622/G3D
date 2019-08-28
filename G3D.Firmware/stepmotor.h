@@ -18,6 +18,12 @@ void step_init() {
 	pinMode(X_DIR_PIN, OUTPUT);
 	pinMode(X_ENABLE_PIN, OUTPUT);
 
+	TCCR0A = 0b00000010;
+	TCCR0B = 0b00000011;
+	OCR0A = 50;
+	TIMSK0 = 0b00000010;
+
+
 	//Y STEP
 	pinMode(Y_STEP_PIN, OUTPUT);
 	pinMode(Y_DIR_PIN, OUTPUT);
@@ -40,12 +46,20 @@ void step_init() {
 
 }
 
-//스텝모터 고정
-void step_lock() {
+//x타이머
+SIGNAL(TIMER0_COMPA_vect) {
+
+	if (X_GOAL != X_CNT) {
+		X_STEP = !X_STEP;
+		digitalWrite(X_STEP_PIN, X_STEP);
+		if (X_STEP) {
+			X_CNT++;
+		}
+	}
 
 }
 
-//스텝모터 고정해제
+//스텝모터 고정 설정
 void step_lock(char pos,bool value) {
 
 	value = !value;
@@ -81,6 +95,34 @@ void step_lock(char pos,bool value) {
 		digitalWrite(E1_ENABLE_PIN, Z_EN);
 		digitalWrite(E0_ENABLE_PIN, E_EN);
 
+		break;
+	}
+}
+
+//mm를 스텝 카운트로 변환
+int step_to_mm(char pos,int mm) {
+	return mm;
+}
+
+//mm만큼 스텝모터 동작
+void step_move(char pos, int mm) {
+
+	switch (pos)
+	{
+	case 'x':
+		X_GOAL = step_to_mm('x',1000);
+		break;
+	default:
+		break;
+	}
+
+}
+
+//auto home
+void auto_home(char pos) {
+	switch (pos) {
+	case 'x':
+		
 		break;
 	}
 }

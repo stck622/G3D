@@ -119,9 +119,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="EndStop.h" />
+    <ClInclude Include="endstop.h" />
     <ClInclude Include="heater.h" />
     <ClInclude Include="PINMAP.h" />
+    <ClInclude Include="status.h" />
     <ClInclude Include="stepmotor.h" />
     <ClInclude Include="termister.h" />
     <ClInclude Include="__vm\.G3D.Firmware.vsarduino.h" />
