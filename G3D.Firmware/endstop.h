@@ -26,11 +26,11 @@ int endstop_getStatus(char pos) {
 	switch (pos)
 	{
 	case 'x':
-		return !digitalRead(X_MIN_PIN);
+		return digitalRead(X_MIN_PIN);
 	case 'y':
-		return !digitalRead(Y_MIN_PIN);
+		return digitalRead(Y_MIN_PIN);
 	case 'z':
-		return !digitalRead(Z_MIN_PIN);
+		return digitalRead(Z_MIN_PIN);
 	default:
 		return -1;
 	}

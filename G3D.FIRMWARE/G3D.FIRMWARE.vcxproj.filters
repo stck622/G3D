@@ -57,5 +57,8 @@
     <ClInclude Include="status.h">
       <Filter>Core</Filter>
     </ClInclude>
+    <ClInclude Include="Direction.h">
+      <Filter>Core</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
