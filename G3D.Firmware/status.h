@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 static bool X_DIR = true;
 static bool Y_DIR = true;
@@ -34,5 +34,9 @@ static bool X_HOME = false;
 static bool Y_HOME = false;
 static bool Z_HOME = false;
 
-static bool X_MOVE_COM = true; //�Ϸ�� true, �̿ϷḸ false
+static bool X_MOVE_COM = true; //완료면 true, 미완료만 false
 static bool Y_MOVE_COM = true;
+
+static int DEF_SPEED = 400;
+static int X_SPEED = DEF_SPEED;
+static int Y_SPEED = DEF_SPEED;

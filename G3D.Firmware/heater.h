@@ -16,9 +16,11 @@
 
 void heater_init() {
 	pinMode(HEATER_0_PIN, OUTPUT);
+	pinMode(4, OUTPUT);
 }
 
 void heater_run(bool run){
 		digitalWrite(HEATER_0_PIN, run);
+		digitalWrite(4, run);
 }
 
