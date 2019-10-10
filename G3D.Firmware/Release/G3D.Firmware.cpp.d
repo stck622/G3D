@@ -18,4 +18,5 @@ C:\Users\stck6\AppData\Local\Temp\VMBuilds\G3D.Firmware\mega_atmega2560\Release\
  C:\Users\stck6\AppData\Local\Temp\VMBuilds\G3D.Firmware\mega_atmega2560\Release\termister.h \
  C:\Users\stck6\AppData\Local\Temp\VMBuilds\G3D.Firmware\mega_atmega2560\Release\stepmotor.h \
  C:\Users\stck6\AppData\Local\Temp\VMBuilds\G3D.Firmware\mega_atmega2560\Release\status.h \
- C:\Users\stck6\AppData\Local\Temp\VMBuilds\G3D.Firmware\mega_atmega2560\Release\Direction.h
+ C:\Users\stck6\AppData\Local\Temp\VMBuilds\G3D.Firmware\mega_atmega2560\Release\Direction.h \
+ C:\Users\stck6\AppData\Local\Temp\VMBuilds\G3D.Firmware\mega_atmega2560\Release\sample_gcode.h

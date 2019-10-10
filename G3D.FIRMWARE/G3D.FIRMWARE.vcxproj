@@ -126,7 +126,11 @@
     <ClInclude Include="status.h" />
     <ClInclude Include="stepmotor.h" />
     <ClInclude Include="termister.h" />
+    <ClInclude Include="uart.h" />
     <ClInclude Include="__vm\.G3D.Firmware.vsarduino.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="sample_gcode.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
