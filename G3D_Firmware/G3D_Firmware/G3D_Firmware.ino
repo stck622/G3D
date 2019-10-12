@@ -1,15 +1,26 @@
-﻿/*
- Name:		G3D_Firmware.ino
- Created:	2019-10-10 오후 3:58:15
- Author:	KWB
-*/
+﻿#include "Status.h"
+#include "StepBuffer.h"
 
-// the setup function runs once when you press reset or power the board
 void setup() {
+
+	Serial.begin(9600);
+
+	StepBuffer a;
+	StepBuffer b;
+
+	a.X_STEP_CNT = 100;
+	b.X_STEP_CNT = 200;
+
+	stepbuffer.PushBack(a);
+	stepbuffer.PushBack(b);
+
+	stepbuffer.PopBack();
+	Serial.println(stepbuffer.Front().X_STEP_CNT);
 
 }
 
-// the loop function runs over and over again until power down or reset
 void loop() {
+
+	
   
 }
