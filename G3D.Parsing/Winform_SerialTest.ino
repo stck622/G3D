@@ -1,82 +1,123 @@
 void setup() {
-  Serial.begin(115200);
+  Serial.begin(9600);
 }
 
-float x = 0, y = 0, e = 0;
 unsigned long cur_millis = 0;
 unsigned long pre_millis = 0;
 double renew_xy_pos[][4] = { 0, };
-int f = 0, cnt = 0;
+float x = 0, y = 0, e = 0;
+int f = 0, g = 0, cnt = 0;
 
-byte leng;
+float x_float = 0, y_float = 0, e_float = 0;
+char f_char[10], g_char[5], x_char[10], y_char[10], e_char[10];
+int g_int, f_int, j = 0, k = 0;
 
 float atf(char buff[]);
+byte leng;
+
 
 void loop() {
   char buf[10] = {0, };
 
-  delay(1000);
-  Serial.write("OK");
   if (Serial.available()) {
-    if (Serial.find("X") || Serial.find("Y") || Serial.find("E") || Serial.find("F")) {
+    Serial.println("Receiving...");
+    /*
+        if (Serial.find("G") || Serial.find("X") || Serial.find("Y") || Serial.find("E") || Serial.find("F")) {
 
-      leng = Serial.readBytesUntil('Y', buf, 10);
-      x = atof(buf);
+          leng = Serial.readBytesUntil('X', buf, 10);
+          g = atoi(buf);
 
-      leng = Serial.readBytesUntil('E', buf, 10);
-      y = atof(buf);
+          leng = Serial.readBytesUntil('Y', buf, 10);
+          x = atof(buf);
 
-      leng = Serial.readBytesUntil('F', buf, 10);
-      e = atof(buf);
+          leng = Serial.readBytesUntil('E', buf, 10);
+          y = atof(buf);
 
-      leng = Serial.readBytesUntil('G', buf, 10);
-      if (atoi(buf) > 5)
-        f = atoi(buf);
-      else
-        f = f;
+          leng = Serial.readBytesUntil('F', buf, 10);
+          e = atof(buf);
 
-      cnt++;
+          leng = Serial.readBytesUntil('\0', buf, 10);
+          if (atoi(buf) > 5)
+            f = atoi(buf);
+          else
+            f = f;
+    */
 
-      Serial.print("X = " + String(x) + ", Y = " + String(y) + ", E = " + String(e) + ", ");
-      Serial.println("F = " + String(f) + ", CNT = " + String(cnt));
+    //String gcode = Serial.readString();
+    char gcode[100];
+    Serial.println(Serial.read());
+    //Serial.println(gcode);
+    //Serial.println(leng);
+    for (int i = 0; i < leng; i++) {
 
+      if (gcode[i] == 'G') {
+        j = i;
+        while (gcode[j] != ' ') {
+          j++;
 
-      //      renew_xy_pos[i][0] = x;
-      //      renew_xy_pos[i][1] = y;
-      //      renew_xy_pos[i][2] = e;
-      //      renew_xy_pos[i][3] = f;
-      //
-      //      Serial.print("X = " + String(renew_xy_pos[i][0]) + ", " );
-      //      Serial.print("Y = " + String(renew_xy_pos[i][1]) + ", " );
-      //      Serial.print("E = " + String(renew_xy_pos[i][2]) + ", " );
-      //      Serial.println(String(renew_xy_pos[i][3]));
-      //      i++;
+          g_char[k] = gcode[j];
+          k++;
+        }
+        k = 0;
+      }
+      if (gcode[i] == 'X') {
+        j = i;
+        while (gcode[j] != ' ')
+        {
+          j++;
+
+          x_char[k] = gcode[j];
+          k++;
+        }
+        k = 0;
+
+      }
+      if (gcode[i] == 'Y') {
+        j = i;
+        while (gcode[j] != ' ') {
+          j++;
+
+          y_char[k] = gcode[j];
+          k++;
+        }
+        k = 0;
+      }
+      if (gcode[i] == 'E') {
+        j = i;
+        while (gcode[j] != ' ') {
+          j++;
+
+          e_char[k] = gcode[j];
+          k++;
+        }
+        k = 0;
+      }
+      if (gcode[i] == 'F') {
+        j = i;
+        while (gcode[j] != '\0') {
+          j++;
+
+          f_char[k] = gcode[j];
+          k++;
+        }
+        k = 0;
+      }
     }
 
+    g_int = atoi(g_char);
+    x_float = atof(x_char);
+    y_float = atof(y_char);
+    e_float = atof(e_char);
+    f_int = atoi(f_char);
 
+    //cnt++;
+
+    Serial.print("G = " + String(g_int) + ", X = " + String(x_float) + ", Y = " + String(y_float));
+    Serial.println(", E = " + String(e_float) + ", F = " + String(f_int) + ", CNT = " + String(cnt));
+
+    cnt++;
+    j = 0; k = 0;
+    //Serial.print("G = " + String(g) + ", X = " + String(x) + ", Y = " + String(y));
+    //Serial.println(", E = " + String(e) + ", F = " + String(f) + ", CNT = " + String(cnt));
   }
-}
-
-float atf(char buff[]) {
-  int i = 0, j = 0, k = 0;
-  float result = 0;
-  float square = 1;
-
-  for (i = 0; i < leng; i++) {
-    if (buff[i] == '.') {
-
-      k = i;
-      for (j = i - 1; j >= 0; j--) {
-        result += float(buff[j]);
-      }
-
-      for (j = 1; j < leng - i; j++) {
-        k++;
-        square *= 10;
-        result += float(buff[k]) * (1 / square);
-      }
-    }
-  }
-  //Serial.println(String(result));
-  return result;
 }
