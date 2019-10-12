@@ -50,6 +50,9 @@ bool Y_DIR_DEF = true;
 bool Z_DIR_DEF = true;
 bool E_DIR_DEF = true;
 
+double sd_x_mm = 0;
+double sd_y_mm = 0;
+
 #define X_STEP_PIN         54
 #define X_DIR_PIN          55
 #define X_ENABLE_PIN       38

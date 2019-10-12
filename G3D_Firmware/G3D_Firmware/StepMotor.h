@@ -68,13 +68,7 @@ void set_step() {
 
 		if (!stepbuffer.Empty()) {
 
-			//Serial.println("run");
-			//Serial.println(stepbuffer.Back().X_STEP_CNT);
-			//Serial.println(stepbuffer.Back().Y_STEP_CNT);
-			//Serial.println(stepbuffer.Back().X_SPEED);
-			//Serial.println(stepbuffer.Back().Y_SPEED);
-			//Serial.println(stepbuffer.Back().X_DIR);
-			//Serial.println(stepbuffer.Back().Y_DIR);
+			Serial.println("run");
 
 			X_GOAL = stepbuffer.Back().X_STEP_CNT*2;
 			Y_GOAL = stepbuffer.Back().Y_STEP_CNT*2;

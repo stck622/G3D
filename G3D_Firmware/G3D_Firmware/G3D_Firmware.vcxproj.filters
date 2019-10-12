@@ -17,16 +17,10 @@
     <ClInclude Include="__vm\.G3D_Firmware.vsarduino.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PinMap.h" />
-    <ClInclude Include="sample_gcode.h" />
-    <ClInclude Include="EndStop.h" />
     <ClInclude Include="StepMotor.h" />
     <ClInclude Include="Status.h" />
     <ClInclude Include="StepBuffer.h" />
-    <ClInclude Include="C:\Users\KWB\Desktop\Vector-1.1.2\src\Vector.h" />
     <ClInclude Include="GcodeParser.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="StepBuffer.cpp" />
+    <ClInclude Include="Vector.h" />
   </ItemGroup>
 </Project>
