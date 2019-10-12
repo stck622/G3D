@@ -1,11 +1,121 @@
 #pragma once
 
-#include "Arduino.h"
-#include "PinMap.h"
-#include "Status.h"
-#include "EndStop.h"
+#include "StepBuffer.h"
 
-//스텝모터 초기화 1 3 4 5
+//스텝모터 고정 설정 true : 고정 / false : 해제
+void step_lock(char pos, bool value) {
+
+	value = value;
+
+	switch (pos) {
+
+	case 'x':
+		X_EN = !value;
+		digitalWrite(X_ENABLE_PIN, X_EN);
+		break;
+
+	case 'y':
+		Y_EN = !value;
+		digitalWrite(Y_ENABLE_PIN, Y_EN);
+		break;
+
+	case 'z':
+		Z_EN = !value;
+		digitalWrite(Z_ENABLE_PIN, Z_EN);
+		digitalWrite(E1_ENABLE_PIN, Z_EN);
+		break;
+
+	case 'e':
+		E_EN = !value;
+		digitalWrite(E0_ENABLE_PIN, E_EN);
+		break;
+
+	case 'a':
+		step_lock('x', value);
+		step_lock('y', value);
+		step_lock('z', value);
+		step_lock('e', value);
+		break;
+
+	}
+}
+
+
+void endstop_init() {
+	pinMode(X_MIN_PIN, INPUT_PULLUP);
+	pinMode(Y_MIN_PIN, INPUT_PULLUP);
+	pinMode(Z_MIN_PIN, INPUT_PULLUP);
+}
+
+//원하는 축의 endstop 상태 받아오기.
+int endstop_getStatus(char pos) {
+	switch (pos)
+	{
+	case 'x':
+		return digitalRead(X_MIN_PIN);
+	case 'y':
+		return digitalRead(Y_MIN_PIN);
+	case 'z':
+		return digitalRead(Z_MIN_PIN);
+	default:
+		return -1;
+	}
+}
+
+void set_step() {
+
+	if (X_MOVE_COM && Y_MOVE_COM) {
+
+		if (!stepbuffer.Empty()) {
+
+			//Serial.println("run");
+			//Serial.println(stepbuffer.Back().X_STEP_CNT);
+			//Serial.println(stepbuffer.Back().Y_STEP_CNT);
+			//Serial.println(stepbuffer.Back().X_SPEED);
+			//Serial.println(stepbuffer.Back().Y_SPEED);
+			//Serial.println(stepbuffer.Back().X_DIR);
+			//Serial.println(stepbuffer.Back().Y_DIR);
+
+			X_GOAL = stepbuffer.Back().X_STEP_CNT*2;
+			Y_GOAL = stepbuffer.Back().Y_STEP_CNT*2;
+			Z_GOAL = stepbuffer.Back().Z_STEP_CNT*2;
+			E_GOAL = stepbuffer.Back().E_STEP_CNT*2;
+
+			X_DIR = stepbuffer.Back().X_DIR;
+			Y_DIR = stepbuffer.Back().Y_DIR;
+			Z_DIR = stepbuffer.Back().Z_DIR;
+			E_DIR = stepbuffer.Back().E_DIR;
+
+			X_SPEED = stepbuffer.Back().X_SPEED;
+			Y_SPEED = stepbuffer.Back().Y_SPEED;
+			Z_SPEED = stepbuffer.Back().Z_SPEED;
+			E_SPEED = stepbuffer.Back().E_SPEED;
+
+			digitalWrite(X_DIR_PIN,X_DIR);
+			digitalWrite(Y_DIR_PIN, Y_DIR);
+			digitalWrite(Z_DIR_PIN, Z_DIR);
+			digitalWrite(E1_DIR_PIN, E_DIR);
+
+			OCR1A = X_SPEED;
+			OCR3A = Y_SPEED;
+			OCR4A = Z_SPEED;
+			OCR5A = E_SPEED;
+
+			X_MOVE_COM = false;
+			Y_MOVE_COM = false;
+
+			stepbuffer.Erase(0);
+
+			TIMSK1 = 0x02;
+			TIMSK3 = 0x02;
+			TIMSK4 = 0x02;
+			TIMSK5 = 0x02;
+
+		}
+	}
+
+}
+
 void step_init() {
 
 	//X PIN
@@ -70,27 +180,18 @@ void step_init() {
 //x타이머
 SIGNAL(TIMER1_COMPA_vect) {
 
-	if (X_GOAL != X_CNT)
+	if ((X_GOAL) != X_CNT)
 	{
-		if (endstop_getStatus('x') && (X_DIR != X_DIR_DEF)) {
-			X_POS = 0;
-			X_MOVE_COM = true;
-			TIMSK1 = 0X00;
-			X_GOAL = 0;
-			X_CNT = 0;
-		}
-		else {
-			X_STEP = !X_STEP;
-			digitalWrite(X_STEP_PIN, X_STEP);
-			if (X_STEP) {
-				X_CNT++;
-			}
-		}
+		digitalWrite(X_STEP_PIN, (X_STEP = !X_STEP));
+		X_CNT++;
 	}
 	else
 	{
 		TIMSK1 = 0X00;
 		X_MOVE_COM = true;
+		X_CNT = 0;
+		set_step();
+
 	}
 
 }
@@ -99,27 +200,17 @@ SIGNAL(TIMER1_COMPA_vect) {
 //y타이머
 SIGNAL(TIMER3_COMPA_vect) {
 
-	if (Y_GOAL != Y_CNT)
+	if ((Y_GOAL) != Y_CNT)
 	{
-		if (endstop_getStatus('y') && (Y_DIR != Y_DIR_DEF)) {
-			Y_POS = 0;
-			Y_MOVE_COM = true;
-			TIMSK3 = 0X00;
-			Y_GOAL = 0;
-			Y_CNT = 0;
-		}
-		else {
-			Y_STEP = !Y_STEP;
-			digitalWrite(Y_STEP_PIN, Y_STEP);
-			if (Y_STEP) {
-				Y_CNT++;
-			}
-		}
+		digitalWrite(Y_STEP_PIN, (Y_STEP = !Y_STEP));
+		Y_CNT++;
 	}
 	else
 	{
-		TIMSK3 = 0x00;
+		TIMSK3 = 0X00;
 		Y_MOVE_COM = true;
+		Y_CNT = 0;
+		set_step();
 	}
 
 }
@@ -165,196 +256,6 @@ SIGNAL(TIMER5_COMPA_vect) {
 	else
 	{
 		TIMSK5 = 0x00;
-		//Serial.print("Y_COMPLETE : ");
-		//Serial.println(Y_MOVE_COM);
 	}
-
-}
-
-
-
-//스텝모터 고정 설정 true : 고정 / false : 해제
-void step_lock(char pos, bool value) {
-
-	value = !value;
-
-	switch (pos) {
-
-	case 'x':
-		X_EN = value;
-		digitalWrite(X_ENABLE_PIN, X_EN);
-		break;
-
-	case 'y':
-		Y_EN = value;
-		digitalWrite(Y_ENABLE_PIN, Y_EN);
-		break;
-
-	case 'z':
-		Z_EN = value;
-		digitalWrite(Z_ENABLE_PIN, Z_EN);
-		digitalWrite(E1_ENABLE_PIN, Z_EN);
-		break;
-
-	case 'e':
-		E_EN = value;
-		digitalWrite(E0_ENABLE_PIN, E_EN);
-		break;
-
-	case 'a':
-		step_lock('x', value);
-		step_lock('y', value);
-		step_lock('z', value);
-		step_lock('e', value);
-		break;
-
-	}
-}
-
-
-//mm를 스텝 카운트로 변환
-int step_to_mm(char pos, double mm) {
-	return abs(mm * 100) + 0.5;
-}
-
-
-void set_dir(char pos, double mm) {
-
-	switch (pos)
-	{
-
-	case 'x':
-		if (mm < 0) {
-			X_DIR = !X_DIR_DEF;
-		}
-		else {
-			X_DIR = X_DIR_DEF;
-		}
-		digitalWrite(X_DIR_PIN, X_DIR);
-		break;
-
-	case 'y':
-		if (mm < 0) {
-			Y_DIR = !Y_DIR_DEF;
-		}
-		else {
-			Y_DIR = Y_DIR_DEF;
-		}
-		digitalWrite(Y_DIR_PIN, Y_DIR);
-		break;
-
-	case 'z':
-		if (mm < 0) {
-			Z_DIR = !Z_DIR_DEF;
-		}
-		else {
-			Z_DIR = Z_DIR_DEF;
-		}
-		digitalWrite(E1_DIR_PIN, Z_DIR);
-		break;
-
-
-	case 'e':
-		if (mm < 0) {
-			E_DIR = !E_DIR_DEF;
-		}
-		else {
-			E_DIR = E_DIR_DEF;
-		}
-		digitalWrite(E0_DIR_PIN, E_DIR);
-		break;
-
-
-	}
-
-}
-
-
-//mm만큼 스텝모터 동작
-void step_move(char pos, double mm, int speed = DEF_SPEED) {
-
-	switch (pos)
-	{
-
-	case 'x':
-		X_CNT = 0;
-		set_dir('x', mm);
-		X_GOAL = step_to_mm('x', mm);
-		X_MOVE_COM = false;
-		OCR1A = speed;
-		//Serial.print(" , SPEED : ");
-		//Serial.println(speed);
-		TIMSK1 = 0X02;
-		break;
-
-	case 'y':
-		Y_CNT = 0;
-		set_dir('y', mm);
-		Y_GOAL = step_to_mm('y', mm);
-		Y_MOVE_COM = false;
-		OCR3A = speed;
-		//Serial.print(" , SPEED : ");
-		//Serial.println(speed);
-		TIMSK3 = 0X02;
-		break;
-
-	case 'z':
-		Z_CNT = 0;
-		set_dir('z', mm);
-		Z_GOAL = step_to_mm('z', mm);
-		OCR4A = speed;
-		TIMSK4 = 0X02;
-		break;
-
-	case 'e':
-		E_CNT = 0;
-		set_dir('e', mm);
-		E_GOAL = step_to_mm('e', mm);
-		OCR5A = 6400;
-
-		TIMSK5 = 0X02;
-		break;
-
-	}
-}
-
-void step_move(double x, double y, double z, double e) {
-
-	if ((x != 0) && (y != 0)) {
-
-		double angle = atan2(x, y);
-
-		step_move('x', x, abs((cos(angle) * DEF_SPEED)));
-		step_move('y', y, abs((sin(angle) * DEF_SPEED)));
-
-		return;
-
-	}
-
-	step_move('x', x);
-	step_move('y', y);
-	step_move('z', z);
-	step_move('e', e);
-
-}
-
-void auto_home(char pos) {
-
-	switch (pos) {
-
-	case 'x':
-		step_move(-10000, 0, 0, 0);
-		break;
-
-	case 'y':
-		step_move(0, -10000, 0, 0);
-		break;
-
-	case 'a':
-		step_move(-10000, -10000, 0, 0);
-		break;
-
-	}
-
 
 }
