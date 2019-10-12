@@ -194,7 +194,7 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.tableLayoutPanel1);
-            this.groupBox1.Location = new System.Drawing.Point(12, 178);
+            this.groupBox1.Location = new System.Drawing.Point(12, 135);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(456, 260);
             this.groupBox1.TabIndex = 11;
@@ -289,12 +289,12 @@
             this.btn_center.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn_center.Font = new System.Drawing.Font("굴림", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btn_center.Font = new System.Drawing.Font("맑은 고딕", 15.75F, System.Drawing.FontStyle.Bold);
             this.btn_center.Location = new System.Drawing.Point(83, 81);
             this.btn_center.Name = "btn_center";
             this.btn_center.Size = new System.Drawing.Size(74, 72);
             this.btn_center.TabIndex = 4;
-            this.btn_center.Text = "🏠";
+            this.btn_center.Text = "H";
             this.btn_center.UseVisualStyleBackColor = true;
             this.btn_center.Click += new System.EventHandler(this.btn_center_Click);
             // 
@@ -350,7 +350,7 @@
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.tableLayoutPanel2);
-            this.groupBox2.Location = new System.Drawing.Point(468, 218);
+            this.groupBox2.Location = new System.Drawing.Point(474, 158);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(245, 220);
             this.groupBox2.TabIndex = 12;
@@ -462,7 +462,7 @@
             this.helpToolStripMenuItem});
             this.menuStrip2.Location = new System.Drawing.Point(0, 0);
             this.menuStrip2.Name = "menuStrip2";
-            this.menuStrip2.Size = new System.Drawing.Size(811, 24);
+            this.menuStrip2.Size = new System.Drawing.Size(728, 24);
             this.menuStrip2.TabIndex = 1;
             this.menuStrip2.Text = "menuStrip2";
             // 
@@ -478,7 +478,7 @@
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel4.Controls.Add(this.lb_ReTime, 0, 0);
             this.tableLayoutPanel4.Controls.Add(this.progbar_ReTime, 0, 1);
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(502, 27);
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(421, 27);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 2;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -534,7 +534,7 @@
             this.tableLayoutPanel6.Controls.Add(this.btn_Stop, 2, 0);
             this.tableLayoutPanel6.Controls.Add(this.btn_Print, 0, 0);
             this.tableLayoutPanel6.Controls.Add(this.btn_Pause, 1, 0);
-            this.tableLayoutPanel6.Location = new System.Drawing.Point(502, 82);
+            this.tableLayoutPanel6.Location = new System.Drawing.Point(421, 82);
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
             this.tableLayoutPanel6.RowCount = 1;
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -553,7 +553,9 @@
             "COM6",
             "COM7",
             "COM8",
-            "COM9"});
+            "COM9",
+            "/dev/ttyUSB0",
+            "/dev/ttyAMA0"});
             this.combox_port.Location = new System.Drawing.Point(93, 67);
             this.combox_port.Name = "combox_port";
             this.combox_port.Size = new System.Drawing.Size(76, 20);
@@ -564,7 +566,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(811, 450);
+            this.ClientSize = new System.Drawing.Size(728, 401);
             this.Controls.Add(this.combox_port);
             this.Controls.Add(this.tableLayoutPanel6);
             this.Controls.Add(this.lb_xy);
