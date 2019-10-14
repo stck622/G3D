@@ -37,19 +37,34 @@ double get_value(String str, String pos) {
 	return (str.substring(str.indexOf(pos) + 1, i)).toDouble();
 }
 
-void gcode_parse(double* x_mm, double* y_mm, double* z_mm, double* e_mm, double* feedrate) {
+void gcode_parse() {
 
 	String str = sd_get_line();
-	//Serial.println(str);
 
 	//if (str.indexOf(";")) return;
 
-		*x_mm = get_value(str, "X");
-		*y_mm = get_value(str, "Y");
-		*z_mm = get_value(str, "Z");
-		*e_mm = get_value(str, "E");
-		*feedrate = get_value(str, "F");
-		Serial.println("G1");
+	//Serial.println(((int)get_value(str, "G")) == 92);
 
-	
+	if (((int)get_value(str, "G")) == 1) {
+
+		//Serial.println(str);
+
+		double x_mm = get_value(str, "X"),
+			y_mm = get_value(str, "Y"),
+			z_mm = get_value(str, "Z"),
+			e_mm = get_value(str, "E"),
+			feedrate = get_value(str, "F");
+		StepBuffer tmp;
+
+		tmp.Set_StepBuffer((x_mm ), (y_mm ), 0, 0, feedrate);
+
+		stepbuffer.PushBack(tmp);
+
+	}
+	else {
+		Serial.println(str);
+	}
+
+
+
 }

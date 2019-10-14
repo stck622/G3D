@@ -50,6 +50,19 @@ public:
 
 	void Set_StepBuffer(double X_MM, double Y_MM, double Z_MM, double  E_MM, int FEEDRATE) {
 
+		if (X_MM) {
+			double tmp = X_MM;
+			X_MM -= sd_x_mm;
+			sd_x_mm = tmp;
+		}
+
+		if (Y_MM) {
+			double tmp = Y_MM;
+			Y_MM -= sd_y_mm;
+			sd_y_mm = tmp;
+		}
+
+
 		X_STEP_CNT = mm_to_step('x', X_MM);
 		Y_STEP_CNT = mm_to_step('y', Y_MM);
 		Z_STEP_CNT = mm_to_step('z', Z_MM);
@@ -61,7 +74,8 @@ public:
 		E_DIR = mm_to_dir('e', E_MM);
 
 		if (FEEDRATE > 1) {
-			DEF_SPEED = ((1000.0 * 1000.0) / ((FEEDRATE / 60.0) * 100.0));
+			DEF_SPEED = ((1000.0 * 1000.0) / ((FEEDRATE / 60.0) * 100.0))*2;
+			Serial.println(DEF_SPEED);
 		}
 
 		if ((X_MM != 0) && (Y_MM != 0)) {
