@@ -15,12 +15,11 @@ int g_int, f_int, j = 0, k = 0;
 float atf(char buff[]);
 byte leng;
 
+char gcode[100];
+char buf[10] = {0, };
 
 void loop() {
-  char buf[10] = {0, };
-
   if (Serial.available()) {
-    Serial.println("Receiving...");
     /*
         if (Serial.find("G") || Serial.find("X") || Serial.find("Y") || Serial.find("E") || Serial.find("F")) {
 
@@ -44,9 +43,14 @@ void loop() {
     */
 
     //String gcode = Serial.readString();
-    char gcode[100];
-    Serial.println(Serial.read());
-    //Serial.println(gcode);
+    leng = Serial.readBytes(gcode, 50);
+    /*
+        Serial.println(leng);
+        for (int i = 0; i < leng; i++) {
+          Serial.print(gcode[i]);
+        }
+        Serial.println();
+    */
     //Serial.println(leng);
     for (int i = 0; i < leng; i++) {
 
@@ -59,6 +63,8 @@ void loop() {
           k++;
         }
         k = 0;
+        g_int = atoi(g_char);
+        Serial.print("G = " + String(g_int));
       }
       if (gcode[i] == 'X') {
         j = i;
@@ -70,7 +76,8 @@ void loop() {
           k++;
         }
         k = 0;
-
+        x_float = atof(x_char);
+        Serial.print(", X = " + String(x_float));
       }
       if (gcode[i] == 'Y') {
         j = i;
@@ -81,6 +88,8 @@ void loop() {
           k++;
         }
         k = 0;
+        y_float = atof(y_char);
+        Serial.print(", Y = " + String(y_float));
       }
       if (gcode[i] == 'E') {
         j = i;
@@ -91,6 +100,8 @@ void loop() {
           k++;
         }
         k = 0;
+        e_float = atof(e_char);
+        Serial.print(", E = " + String(e_float));
       }
       if (gcode[i] == 'F') {
         j = i;
@@ -101,19 +112,25 @@ void loop() {
           k++;
         }
         k = 0;
+        f_int = atoi(f_char);
+        Serial.print(", F = " + String(f_int));
       }
     }
+    /*
+        Serial.print("G = " + String(g_char) + ", X = " + String(x_char) + ", Y = " + String(y_char));
+        Serial.println(", E = " + String(e_char) + ", F = " + String(f_char) + ", CNT = " + String(cnt));
+    */
 
-    g_int = atoi(g_char);
-    x_float = atof(x_char);
-    y_float = atof(y_char);
-    e_float = atof(e_char);
-    f_int = atoi(f_char);
 
     //cnt++;
-
-    Serial.print("G = " + String(g_int) + ", X = " + String(x_float) + ", Y = " + String(y_float));
-    Serial.println(", E = " + String(e_float) + ", F = " + String(f_int) + ", CNT = " + String(cnt));
+    /*
+      Serial.println(g_int);
+      Serial.println(x_float);
+      Serial.println(y_float);
+      Serial.println(e_float);
+      Serial.println(f_int);
+    */
+    Serial.println(", CNT = " + String(cnt));
 
     cnt++;
     j = 0; k = 0;

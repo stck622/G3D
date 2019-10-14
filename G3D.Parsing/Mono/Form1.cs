@@ -41,6 +41,8 @@ namespace Mono
             btn_Pause.Enabled = false;
             btn_Stop.Enabled = false;
             btn_application.Enabled = false;
+            numericupdow_dstc.Enabled = false;
+            numericupdow_spd.Enabled = false;
             
         }
 
@@ -165,11 +167,24 @@ namespace Mono
             btn_Pause.Enabled = true;
             btn_Stop.Enabled = true;
             btn_application.Enabled = true;
+            numericupdow_dstc.Enabled = true;
+            numericupdow_spd.Enabled = true;
         }
 
         private void btn_application_Click(object sender, EventArgs e)
         {
 
         }
+        
+        private void numericupdow_dstc_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void numericupdow_spd_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+        
     }
 }

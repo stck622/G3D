@@ -46,11 +46,11 @@
             this.btn_up = new System.Windows.Forms.Button();
             this.btn_down = new System.Windows.Forms.Button();
             this.btn_center = new System.Windows.Forms.Button();
-            this.doma_distance = new System.Windows.Forms.DomainUpDown();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.doma_speed = new System.Windows.Forms.DomainUpDown();
             this.btn_application = new System.Windows.Forms.Button();
+            this.numericupdow_dstc = new System.Windows.Forms.NumericUpDown();
+            this.numericupdow_spd = new System.Windows.Forms.NumericUpDown();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.lb_SetNozTem = new System.Windows.Forms.Label();
@@ -74,6 +74,8 @@
             this.combox_port = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericupdow_dstc)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericupdow_spd)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.menuStrip2.SuspendLayout();
@@ -214,11 +216,11 @@
             this.tableLayoutPanel1.Controls.Add(this.btn_up, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.btn_down, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.btn_center, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.doma_distance, 4, 0);
             this.tableLayoutPanel1.Controls.Add(this.label3, 3, 0);
             this.tableLayoutPanel1.Controls.Add(this.label4, 3, 1);
-            this.tableLayoutPanel1.Controls.Add(this.doma_speed, 4, 1);
             this.tableLayoutPanel1.Controls.Add(this.btn_application, 4, 2);
+            this.tableLayoutPanel1.Controls.Add(this.numericupdow_dstc, 4, 0);
+            this.tableLayoutPanel1.Controls.Add(this.numericupdow_spd, 4, 1);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 20);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 3;
@@ -298,14 +300,6 @@
             this.btn_center.UseVisualStyleBackColor = true;
             this.btn_center.Click += new System.EventHandler(this.btn_center_Click);
             // 
-            // doma_distance
-            // 
-            this.doma_distance.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.doma_distance.Location = new System.Drawing.Point(362, 28);
-            this.doma_distance.Name = "doma_distance";
-            this.doma_distance.Size = new System.Drawing.Size(80, 21);
-            this.doma_distance.TabIndex = 23;
-            // 
             // label3
             // 
             this.label3.Anchor = System.Windows.Forms.AnchorStyles.None;
@@ -326,26 +320,38 @@
             this.label4.TabIndex = 25;
             this.label4.Text = "모터 속도 설정 :";
             // 
-            // doma_speed
-            // 
-            this.doma_speed.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.doma_speed.Location = new System.Drawing.Point(362, 106);
-            this.doma_speed.Name = "doma_speed";
-            this.doma_speed.Size = new System.Drawing.Size(80, 21);
-            this.doma_speed.TabIndex = 24;
-            this.doma_speed.Text = "200";
-            this.doma_speed.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
             // btn_application
             // 
             this.btn_application.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.btn_application.Location = new System.Drawing.Point(364, 183);
+            this.btn_application.Location = new System.Drawing.Point(365, 183);
             this.btn_application.Name = "btn_application";
             this.btn_application.Size = new System.Drawing.Size(75, 23);
             this.btn_application.TabIndex = 26;
             this.btn_application.Text = "적용";
             this.btn_application.UseVisualStyleBackColor = true;
             this.btn_application.Click += new System.EventHandler(this.btn_application_Click);
+            // 
+            // numericupdow_dstc
+            // 
+            this.numericupdow_dstc.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.numericupdow_dstc.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.numericupdow_dstc.Location = new System.Drawing.Point(362, 27);
+            this.numericupdow_dstc.Name = "numericupdow_dstc";
+            this.numericupdow_dstc.Size = new System.Drawing.Size(82, 23);
+            this.numericupdow_dstc.TabIndex = 27;
+            this.numericupdow_dstc.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.numericupdow_dstc.ValueChanged += new System.EventHandler(this.numericupdow_dstc_ValueChanged);
+            // 
+            // numericupdow_spd
+            // 
+            this.numericupdow_spd.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.numericupdow_spd.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.numericupdow_spd.Location = new System.Drawing.Point(362, 105);
+            this.numericupdow_spd.Name = "numericupdow_spd";
+            this.numericupdow_spd.Size = new System.Drawing.Size(82, 23);
+            this.numericupdow_spd.TabIndex = 28;
+            this.numericupdow_spd.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.numericupdow_spd.ValueChanged += new System.EventHandler(this.numericupdow_spd_ValueChanged);
             // 
             // groupBox2
             // 
@@ -462,7 +468,7 @@
             this.helpToolStripMenuItem});
             this.menuStrip2.Location = new System.Drawing.Point(0, 0);
             this.menuStrip2.Name = "menuStrip2";
-            this.menuStrip2.Size = new System.Drawing.Size(728, 24);
+            this.menuStrip2.Size = new System.Drawing.Size(757, 24);
             this.menuStrip2.TabIndex = 1;
             this.menuStrip2.Text = "menuStrip2";
             // 
@@ -566,7 +572,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(728, 401);
+            this.ClientSize = new System.Drawing.Size(757, 429);
             this.Controls.Add(this.combox_port);
             this.Controls.Add(this.tableLayoutPanel6);
             this.Controls.Add(this.lb_xy);
@@ -581,11 +587,13 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Geniearth";
+            this.Text = " ";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.groupBox1.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericupdow_dstc)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericupdow_spd)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
@@ -638,10 +646,10 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
         private System.Windows.Forms.ComboBox combox_port;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.DomainUpDown doma_distance;
-        private System.Windows.Forms.DomainUpDown doma_speed;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button btn_application;
+        private System.Windows.Forms.NumericUpDown numericupdow_dstc;
+        private System.Windows.Forms.NumericUpDown numericupdow_spd;
     }
 }
 
