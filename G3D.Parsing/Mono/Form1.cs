@@ -21,17 +21,6 @@ namespace Mono
         private void Form1_Load(object sender, EventArgs e)
         {
             //combox_port.DataSource = serialPort1.GetPortNames();
-            try
-            {
-                serialPort1.PortName = "/dev/ttyUSB0";
-            }
-            catch
-            {
-                Console.WriteLine("ERROR");
-                    //.Show("현재 포트가 연결되어 있지 않습니다.", "에러", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            serialPort1.BaudRate = 9600;
             btn_center.Enabled = false;
             btn_right.Enabled = false;
             btn_left.Enabled = false;
@@ -65,7 +54,7 @@ namespace Mono
 
             try
             {
-                serialPort1.WriteLine(gcodes);
+                CP2102.WriteLine(gcodes);
             }
             catch
             {
@@ -95,7 +84,7 @@ namespace Mono
 
         private void sendGcode(String gcode)
         {            
-            serialPort1.WriteLine(gcode.ToString());
+            CP2102.WriteLine(gcode.ToString());
             lb_xy.Text = gcode;
         }
 
@@ -131,7 +120,7 @@ namespace Mono
 
         private void btn_Pause_Click(object sender, EventArgs e)
         {
-            serialPort1.WriteLine("Pause Print");
+            CP2102.WriteLine("Pause Print");
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -141,18 +130,18 @@ namespace Mono
 
         private void btn_Stop_Click(object sender, EventArgs e)
         {
-            serialPort1.WriteLine("Stop Print");
+            CP2102.WriteLine("Stop Print");
         }
 
         private void combox_port_SelectedIndexChanged(object sender, EventArgs e)
         {
-            serialPort1.Close();
+            CP2102.Close();
 
-            serialPort1.PortName = combox_port.Text;
+            CP2102.PortName = combox_port.Text;
             //serialPort1.Open();
             try
             {
-                serialPort1.Open();
+                CP2102.Open();
             }
             catch
             {
@@ -173,7 +162,7 @@ namespace Mono
 
         private void btn_application_Click(object sender, EventArgs e)
         {
-
+            CP2102.WriteLine(numericupdow_dstc.Value.ToString() + numericupdow_spd.Value.ToString());
         }
         
         private void numericupdow_dstc_ValueChanged(object sender, EventArgs e)
@@ -185,6 +174,10 @@ namespace Mono
         {
 
         }
-        
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            CP2102.BaudRate = Convert.ToInt32(combo_baudrate.Text);
+        }
     }
 }

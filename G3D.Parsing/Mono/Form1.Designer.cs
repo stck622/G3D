@@ -66,12 +66,14 @@
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.openGcode = new System.Windows.Forms.OpenFileDialog();
             this.txtbox_file = new System.Windows.Forms.TextBox();
-            this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
+            this.CP2102 = new System.IO.Ports.SerialPort(this.components);
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.lb_xy = new System.Windows.Forms.Label();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.combox_port = new System.Windows.Forms.ComboBox();
+            this.lb_baudrate = new System.Windows.Forms.Label();
+            this.combo_baudrate = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericupdow_dstc)).BeginInit();
@@ -336,6 +338,11 @@
             this.numericupdow_dstc.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.numericupdow_dstc.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.numericupdow_dstc.Location = new System.Drawing.Point(362, 27);
+            this.numericupdow_dstc.Maximum = new decimal(new int[] {
+            200,
+            0,
+            0,
+            0});
             this.numericupdow_dstc.Name = "numericupdow_dstc";
             this.numericupdow_dstc.Size = new System.Drawing.Size(82, 23);
             this.numericupdow_dstc.TabIndex = 27;
@@ -347,6 +354,11 @@
             this.numericupdow_spd.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.numericupdow_spd.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.numericupdow_spd.Location = new System.Drawing.Point(362, 105);
+            this.numericupdow_spd.Maximum = new decimal(new int[] {
+            200,
+            0,
+            0,
+            0});
             this.numericupdow_spd.Name = "numericupdow_spd";
             this.numericupdow_spd.Size = new System.Drawing.Size(82, 23);
             this.numericupdow_spd.TabIndex = 28;
@@ -561,18 +573,54 @@
             "COM8",
             "COM9",
             "/dev/ttyUSB0",
-            "/dev/ttyAMA0"});
+            "/dev/ttyAMA0",
+            "/dev/ttyUSB1"});
             this.combox_port.Location = new System.Drawing.Point(93, 67);
             this.combox_port.Name = "combox_port";
             this.combox_port.Size = new System.Drawing.Size(76, 20);
             this.combox_port.TabIndex = 21;
             this.combox_port.SelectedIndexChanged += new System.EventHandler(this.combox_port_SelectedIndexChanged);
             // 
+            // lb_baudrate
+            // 
+            this.lb_baudrate.AutoSize = true;
+            this.lb_baudrate.Location = new System.Drawing.Point(175, 70);
+            this.lb_baudrate.Name = "lb_baudrate";
+            this.lb_baudrate.Size = new System.Drawing.Size(73, 12);
+            this.lb_baudrate.TabIndex = 22;
+            this.lb_baudrate.Text = "보드레이트 :";
+            // 
+            // combo_baudrate
+            // 
+            this.combo_baudrate.FormattingEnabled = true;
+            this.combo_baudrate.Items.AddRange(new object[] {
+            "300",
+            "1200",
+            "2400",
+            "4800",
+            "9600",
+            "19200",
+            "38400",
+            "74880",
+            "115200",
+            "230400",
+            "250000",
+            "500000",
+            "1000000",
+            "2000000"});
+            this.combo_baudrate.Location = new System.Drawing.Point(253, 67);
+            this.combo_baudrate.Name = "combo_baudrate";
+            this.combo_baudrate.Size = new System.Drawing.Size(115, 20);
+            this.combo_baudrate.TabIndex = 23;
+            this.combo_baudrate.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(757, 429);
+            this.Controls.Add(this.combo_baudrate);
+            this.Controls.Add(this.lb_baudrate);
             this.Controls.Add(this.combox_port);
             this.Controls.Add(this.tableLayoutPanel6);
             this.Controls.Add(this.lb_xy);
@@ -637,7 +685,7 @@
         private System.Windows.Forms.ToolStripMenuItem infoToolStripMenuItem;
         private System.Windows.Forms.OpenFileDialog openGcode;
         private System.Windows.Forms.TextBox txtbox_file;
-        private System.IO.Ports.SerialPort serialPort1;
+        private System.IO.Ports.SerialPort CP2102;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label lb_xy;
@@ -650,6 +698,8 @@
         private System.Windows.Forms.Button btn_application;
         private System.Windows.Forms.NumericUpDown numericupdow_dstc;
         private System.Windows.Forms.NumericUpDown numericupdow_spd;
+        private System.Windows.Forms.Label lb_baudrate;
+        private System.Windows.Forms.ComboBox combo_baudrate;
     }
 }
 
