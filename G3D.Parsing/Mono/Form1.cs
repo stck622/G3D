@@ -32,11 +32,20 @@ namespace Mono
             btn_application.Enabled = false;
             numericupdow_dstc.Enabled = false;
             numericupdow_spd.Enabled = false;
-            
+
         }
 
         private void openFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            float x_float = 0, y_float = 0, e_float = 0;
+            int g_int = 0, f_int = 0;
+            char[] f_char = new char[10];
+            char[] g_char = new char[5];
+            char[] x_char = new char[10];
+            char[] y_char = new char[10];
+            char[] e_char = new char[10];
+            int k = 0;
+
             openGcode.DefaultExt = "All files";
             openGcode.Filter = "All files (*.*)|*.*";
             openGcode.Multiselect = false;
@@ -51,15 +60,110 @@ namespace Mono
             }
             string path = this.txtbox_file.Text;
             string gcodes = System.IO.File.ReadAllText(path);
-
+            txtbox_gcode.Text = gcodes;
+            
             try
             {
                 CP2102.WriteLine(gcodes);
+
             }
             catch
             {
                 MessageBox.Show("현재 포트가 연결되어 있지 않습니다.", "에러", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            
+            for (int i = 0; i < gcodes.Length; i++)
+            {
+                if (gcodes[i] == 'G')
+                {
+                    for (int j = i + 1; j < gcodes.Length; j++)
+                    {
+
+                        if (gcodes[j] == ' ')
+                            break;
+                        else
+                        {
+                            g_char[k] = gcodes[j];
+                            k++;
+                        }
+                    }
+                    k = 0;
+                }
+
+
+                if (gcodes[i] == 'X')
+                {
+                    for (int j = i + 1; j < gcodes.Length; j++)
+                    {
+
+                        if (gcodes[j] == ' ')
+                            break;
+                        else
+                        {
+                            x_char[k] = gcodes[j];
+                            k++;
+                        }
+                    }
+                    k = 0;
+                }
+
+                if (gcodes[i] == 'Y')
+                {
+                    for (int j = i + 1; j < gcodes.Length; j++)
+                    {
+
+                        if (gcodes[j] == ' ')
+                            break;
+                        else
+                        {
+                            y_char[k] = gcodes[j];
+                            k++;
+                        }
+                    }
+                    k = 0;
+                }
+                if (gcodes[i] == 'E')
+                {
+                    for (int j = i + 1; j < gcodes.Length; j++)
+                    {
+
+                        if (gcodes[j] == ' ')
+                            break;
+                        else
+                        {
+                            e_char[k] = gcodes[j];
+                            k++;
+                        }
+                    }
+                    k = 0;
+                }
+                if (gcodes[i] == 'F')
+                {
+                    for (int j = i + 1; j < gcodes.Length; j++)
+                    {
+
+                        if (gcodes[j] == '\r')
+                            break;
+                        else
+                        {
+                            f_char[k] = gcodes[j];
+                            k++;
+                        }
+                    }
+                    k = 0;
+                }
+            }
+            
+
+            
+            g_int = Convert.ToInt32(g_char);
+            x_float = Convert.ToSingle(x_char);
+            y_float = Convert.ToSingle(y_char);
+            e_float = Convert.ToSingle(e_char);
+            f_int = Convert.ToInt32(f_char);
+
+
+            txtbox_gcode.Text = "G = " + Convert.ToString(g_int) + ", X = " + Convert.ToString(x_float) + ", Y = " + Convert.ToString(y_float) + ", E = " + Convert.ToString(e_float) + ", F = " + Convert.ToString(f_int);
             
             /*
             try
@@ -79,11 +183,11 @@ namespace Mono
 
         private void btn_Print_Click(object sender, EventArgs e)
         {
-           
+
         }
 
         private void sendGcode(String gcode)
-        {            
+        {
             CP2102.WriteLine(gcode.ToString());
             lb_xy.Text = gcode;
         }
@@ -116,7 +220,7 @@ namespace Mono
         {
             sendGcode("G28 X0 Y0 F");
 
-        }        
+        }
 
         private void btn_Pause_Click(object sender, EventArgs e)
         {
@@ -145,7 +249,7 @@ namespace Mono
             }
             catch
             {
-                MessageBox.Show(combox_port.Text + " 포트는 연결되지 않은 포트입니다.", "에러", MessageBoxButtons.OK, MessageBoxIcon.Error);                
+                MessageBox.Show(combox_port.Text + " 포트는 연결되지 않은 포트입니다.", "에러", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             btn_center.Enabled = true;
             btn_right.Enabled = true;
@@ -164,7 +268,7 @@ namespace Mono
         {
             CP2102.WriteLine(numericupdow_dstc.Value.ToString() + numericupdow_spd.Value.ToString());
         }
-        
+
         private void numericupdow_dstc_ValueChanged(object sender, EventArgs e)
         {
 
