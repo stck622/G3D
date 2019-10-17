@@ -76,6 +76,7 @@
             this.combo_baudrate = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.txtbox_gcode = new System.Windows.Forms.TextBox();
+            this.txtbox_temp = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericupdow_dstc)).BeginInit();
@@ -672,12 +673,20 @@
             // 
             // txtbox_gcode
             // 
-            this.txtbox_gcode.Location = new System.Drawing.Point(707, 27);
+            this.txtbox_gcode.Location = new System.Drawing.Point(707, 54);
             this.txtbox_gcode.Multiline = true;
             this.txtbox_gcode.Name = "txtbox_gcode";
             this.txtbox_gcode.ReadOnly = true;
-            this.txtbox_gcode.Size = new System.Drawing.Size(221, 413);
+            this.txtbox_gcode.Size = new System.Drawing.Size(221, 189);
             this.txtbox_gcode.TabIndex = 25;
+            // 
+            // txtbox_temp
+            // 
+            this.txtbox_temp.Location = new System.Drawing.Point(707, 249);
+            this.txtbox_temp.Multiline = true;
+            this.txtbox_temp.Name = "txtbox_temp";
+            this.txtbox_temp.Size = new System.Drawing.Size(221, 191);
+            this.txtbox_temp.TabIndex = 26;
             // 
             // Form1
             // 
@@ -685,6 +694,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DarkGreen;
             this.ClientSize = new System.Drawing.Size(940, 452);
+            this.Controls.Add(this.txtbox_temp);
             this.Controls.Add(this.txtbox_gcode);
             this.Controls.Add(this.tableLayoutPanel3);
             this.Controls.Add(this.tableLayoutPanel6);
@@ -696,7 +706,6 @@
             this.HelpButton = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
-            this.ShowInTaskbar = false;
             this.Text = " 삼디 출력기";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.groupBox1.ResumeLayout(false);
@@ -768,6 +777,7 @@
         private System.Windows.Forms.NumericUpDown numericupdow_bedTem;
         private System.Windows.Forms.NumericUpDown numericupdow_nozTem;
         private System.Windows.Forms.TextBox txtbox_gcode;
+        private System.Windows.Forms.TextBox txtbox_temp;
     }
 }
 

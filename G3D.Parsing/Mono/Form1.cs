@@ -60,8 +60,9 @@ namespace Mono
             }
             string path = this.txtbox_file.Text;
             string gcodes = System.IO.File.ReadAllText(path);
-            txtbox_gcode.Text = gcodes;
-            
+            txtbox_temp.Text = gcodes;
+
+            /*
             try
             {
                 CP2102.WriteLine(gcodes);
@@ -71,12 +72,17 @@ namespace Mono
             {
                 MessageBox.Show("현재 포트가 연결되어 있지 않습니다.", "에러", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            
-            for (int i = 0; i < gcodes.Length; i++)
+            */
+
+            txtbox_temp.Text = Convert.ToString(txtbox_temp.Lines.Length);
+
+            int leng = Convert.ToInt32(txtbox_temp.Text);
+
+            for (int i = 0; i < leng; i++)
             {
                 if (gcodes[i] == 'G')
                 {
-                    for (int j = i + 1; j < gcodes.Length; j++)
+                    for (int j = i + 1; j < leng; j++)
                     {
 
                         if (gcodes[j] == ' ')
@@ -93,7 +99,7 @@ namespace Mono
 
                 if (gcodes[i] == 'X')
                 {
-                    for (int j = i + 1; j < gcodes.Length; j++)
+                    for (int j = i + 1; j < leng; j++)
                     {
 
                         if (gcodes[j] == ' ')
@@ -109,7 +115,7 @@ namespace Mono
 
                 if (gcodes[i] == 'Y')
                 {
-                    for (int j = i + 1; j < gcodes.Length; j++)
+                    for (int j = i + 1; j < leng; j++)
                     {
 
                         if (gcodes[j] == ' ')
@@ -122,9 +128,10 @@ namespace Mono
                     }
                     k = 0;
                 }
+                /*
                 if (gcodes[i] == 'E')
                 {
-                    for (int j = i + 1; j < gcodes.Length; j++)
+                    for (int j = i + 1; j < leng; j++)
                     {
 
                         if (gcodes[j] == ' ')
@@ -137,9 +144,10 @@ namespace Mono
                     }
                     k = 0;
                 }
+                
                 if (gcodes[i] == 'F')
                 {
-                    for (int j = i + 1; j < gcodes.Length; j++)
+                    for (int j = i + 1; j < leng; j++)
                     {
 
                         if (gcodes[j] == '\r')
@@ -153,32 +161,32 @@ namespace Mono
                     k = 0;
                 }
             }
-            
-
-            
-            g_int = Convert.ToInt32(g_char);
-            x_float = Convert.ToSingle(x_char);
-            y_float = Convert.ToSingle(y_char);
-            e_float = Convert.ToSingle(e_char);
-            f_int = Convert.ToInt32(f_char);
-
-
-            txtbox_gcode.Text = "G = " + Convert.ToString(g_int) + ", X = " + Convert.ToString(x_float) + ", Y = " + Convert.ToString(y_float) + ", E = " + Convert.ToString(e_float) + ", F = " + Convert.ToString(f_int);
-            
-            /*
-            try
-            {
-                if (serialPort1.ReadLine() == "OK")
-                    MessageBox.Show("Recived OK");
-                    //serialPort1.WriteLine(gcodes);
-            }
-            catch
-            {
-                MessageBox.Show("현재 포트가 연결되어 있지 않습니다.", "에러", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
             */
 
+                g_int = Convert.ToInt32(g_char);
+                x_float = Convert.ToSingle(x_char);
+                y_float = Convert.ToSingle(y_char);
+                e_float = Convert.ToSingle(e_char);
+                f_int = Convert.ToInt32(f_char);
+
+
+                txtbox_gcode.Text = "G = " + Convert.ToString(g_int) + ", X = " + Convert.ToString(x_float) + ", Y = " + Convert.ToString(y_float) + ", E = " + Convert.ToString(e_float) + ", F = " + Convert.ToString(f_int);
+
+                /*
+                try
+                {
+                    if (serialPort1.ReadLine() == "OK")
+                        MessageBox.Show("Recived OK");
+                        //serialPort1.WriteLine(gcodes);
+                }
+                catch
+                {
+                    MessageBox.Show("현재 포트가 연결되어 있지 않습니다.", "에러", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                */
+
+            }
         }
 
         private void btn_Print_Click(object sender, EventArgs e)
