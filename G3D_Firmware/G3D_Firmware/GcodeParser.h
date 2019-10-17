@@ -56,7 +56,7 @@ void gcode_parse() {
 			feedrate = get_value(str, "F");
 		StepBuffer tmp;
 
-		tmp.Set_StepBuffer((x_mm ), (y_mm ), 0, 0, feedrate);
+		tmp.Set_StepBuffer((x_mm ), (y_mm ), 0, e_mm, feedrate);
 
 		stepbuffer.PushBack(tmp);
 

@@ -2,7 +2,15 @@
 
 //mm를 스텝 카운트로 변환
 int mm_to_step(char pos, double mm) {
-	return abs(mm * 100) + 0.5;
+	switch (pos) {
+
+	case 'e':
+		return abs(mm * 110) + 0.5;
+		break;
+
+	default:
+		return abs(mm * 100) + 0.5;
+	}
 }
 
 
@@ -62,19 +70,25 @@ public:
 			sd_y_mm = tmp;
 		}
 
+		if (E_MM) {
+			double tmp = E_MM;
+			E_MM -= sd_e_mm;
+			sd_e_mm = tmp;
+		}
+
 
 		X_STEP_CNT = mm_to_step('x', X_MM);
 		Y_STEP_CNT = mm_to_step('y', Y_MM);
-		Z_STEP_CNT = mm_to_step('z', Z_MM);
+		//Z_STEP_CNT = mm_to_step('z', Z_MM);
 		E_STEP_CNT = mm_to_step('e', E_MM);
 
 		X_DIR = mm_to_dir('x', X_MM);
 		Y_DIR = mm_to_dir('y', Y_MM);
-		Z_DIR = mm_to_dir('z', Z_MM);
+		//Z_DIR = mm_to_dir('z', Z_MM);
 		E_DIR = mm_to_dir('e', E_MM);
 
 		if (FEEDRATE > 1) {
-			DEF_SPEED = ((1000.0 * 1000.0) / ((FEEDRATE / 60.0) * 100.0))*2;
+			DEF_SPEED = ((1000.0 * 1000.0) / ((FEEDRATE / 60.0) * 100.0)) * 2;
 			Serial.println(DEF_SPEED);
 		}
 
@@ -84,15 +98,21 @@ public:
 
 			X_SPEED = abs((cos(angle) * DEF_SPEED));
 			Y_SPEED = abs((sin(angle) * DEF_SPEED));
-
-			return;
+			E_SPEED = 0;
 
 		}
-
-		X_SPEED = DEF_SPEED;
-		Y_SPEED = DEF_SPEED;
-		Z_SPEED = DEF_SPEED;
-		E_SPEED = DEF_SPEED;
+		else if (X_MM ) {
+			X_SPEED = DEF_SPEED*2;
+			if (E_MM != 0.0) {
+				E_SPEED = ((X_SPEED * abs(E_MM)*110) / abs(X_MM));
+			}
+		}
+		else if (Y_MM ){
+			Y_SPEED = DEF_SPEED * 2;
+			if (E_MM != 0.0) {
+				E_SPEED = ((Y_SPEED * abs(E_MM)*110) / abs(Y_MM));
+			}
+		}
 
 	}
 

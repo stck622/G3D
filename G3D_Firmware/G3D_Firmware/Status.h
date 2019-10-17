@@ -52,6 +52,7 @@ bool E_DIR_DEF = true;
 
 double sd_x_mm = 0;
 double sd_y_mm = 0;
+double sd_e_mm = 0;
 
 #define X_STEP_PIN         54
 #define X_DIR_PIN          55

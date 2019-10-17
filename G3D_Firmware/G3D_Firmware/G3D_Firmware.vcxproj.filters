@@ -9,6 +9,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="termister">
+      <UniqueIdentifier>{2f14683b-52f2-4831-89c7-4ab34e5a3d1d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="G3D_Firmware.ino" />
@@ -22,5 +25,112 @@
     <ClInclude Include="StepBuffer.h" />
     <ClInclude Include="GcodeParser.h" />
     <ClInclude Include="Vector.h" />
+    <ClInclude Include="thermistornames.h">
+      <Filter>termister</Filter>
+    </ClInclude>
+    <ClInclude Include="thermistortable_1.h">
+      <Filter>termister</Filter>
+    </ClInclude>
+    <ClInclude Include="thermistortable_2.h">
+      <Filter>termister</Filter>
+    </ClInclude>
+    <ClInclude Include="thermistortable_3.h">
+      <Filter>termister</Filter>
+    </ClInclude>
+    <ClInclude Include="thermistortable_4.h">
+      <Filter>termister</Filter>
+    </ClInclude>
+    <ClInclude Include="thermistortable_5.h">
+      <Filter>termister</Filter>
+    </ClInclude>
+    <ClInclude Include="thermistortable_6.h">
+      <Filter>termister</Filter>
+    </ClInclude>
+    <ClInclude Include="thermistortable_7.h">
+      <Filter>termister</Filter>
+    </ClInclude>
+    <ClInclude Include="thermistortable_8.h">
+      <Filter>termister</Filter>
+    </ClInclude>
+    <ClInclude Include="thermistortable_9.h">
+      <Filter>termister</Filter>
+    </ClInclude>
+    <ClInclude Include="thermistortable_10.h">
+      <Filter>termister</Filter>
+    </ClInclude>
+    <ClInclude Include="thermistortable_11.h">
+      <Filter>termister</Filter>
+    </ClInclude>
+    <ClInclude Include="thermistortable_12.h">
+      <Filter>termister</Filter>
+    </ClInclude>
+    <ClInclude Include="thermistortable_13.h">
+      <Filter>termister</Filter>
+    </ClInclude>
+    <ClInclude Include="thermistortable_20.h">
+      <Filter>termister</Filter>
+    </ClInclude>
+    <ClInclude Include="thermistortable_51.h">
+      <Filter>termister</Filter>
+    </ClInclude>
+    <ClInclude Include="thermistortable_52.h">
+      <Filter>termister</Filter>
+    </ClInclude>
+    <ClInclude Include="thermistortable_55.h">
+      <Filter>termister</Filter>
+    </ClInclude>
+    <ClInclude Include="thermistortable_60.h">
+      <Filter>termister</Filter>
+    </ClInclude>
+    <ClInclude Include="thermistortable_66.h">
+      <Filter>termister</Filter>
+    </ClInclude>
+    <ClInclude Include="thermistortable_70.h">
+      <Filter>termister</Filter>
+    </ClInclude>
+    <ClInclude Include="thermistortable_71.h">
+      <Filter>termister</Filter>
+    </ClInclude>
+    <ClInclude Include="thermistortable_75.h">
+      <Filter>termister</Filter>
+    </ClInclude>
+    <ClInclude Include="thermistortable_80.h">
+      <Filter>termister</Filter>
+    </ClInclude>
+    <ClInclude Include="thermistortable_110.h">
+      <Filter>termister</Filter>
+    </ClInclude>
+    <ClInclude Include="thermistortable_147.h">
+      <Filter>termister</Filter>
+    </ClInclude>
+    <ClInclude Include="thermistortable_998.h">
+      <Filter>termister</Filter>
+    </ClInclude>
+    <ClInclude Include="thermistortable_999.h">
+      <Filter>termister</Filter>
+    </ClInclude>
+    <ClInclude Include="thermistortable_1010.h">
+      <Filter>termister</Filter>
+    </ClInclude>
+    <ClInclude Include="thermistortable_1047.h">
+      <Filter>termister</Filter>
+    </ClInclude>
+    <ClInclude Include="Thermistortables.h">
+      <Filter>termister</Filter>
+    </ClInclude>
+    <ClInclude Include="Conditionals.h">
+      <Filter>termister</Filter>
+    </ClInclude>
+    <ClInclude Include="Configuration.h">
+      <Filter>termister</Filter>
+    </ClInclude>
+    <ClInclude Include="thermistor.h">
+      <Filter>termister</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="thermistor.cpp">
+      <Filter>termister</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

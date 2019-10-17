@@ -24,4 +24,5 @@ C:\Users\stck6\AppData\Local\Temp\VMBuilds\G3D_Firmware\mega_atmega2560\Debug\G3
  C:\Users\stck6\AppData\Local\Temp\VMBuilds\G3D_Firmware\mega_atmega2560\Debug\StepMotor.h \
  C:\Users\stck6\AppData\Local\Temp\VMBuilds\G3D_Firmware\mega_atmega2560\Debug\StepBuffer.h \
  C:\Users\stck6\AppData\Local\Temp\VMBuilds\G3D_Firmware\mega_atmega2560\Debug\Vector.h \
- C:\Users\stck6\AppData\Local\Temp\VMBuilds\G3D_Firmware\mega_atmega2560\Debug\GcodeParser.h
+ C:\Users\stck6\AppData\Local\Temp\VMBuilds\G3D_Firmware\mega_atmega2560\Debug\GcodeParser.h \
+ C:\Users\stck6\AppData\Local\Temp\VMBuilds\G3D_Firmware\mega_atmega2560\Debug\thermistor.h

@@ -3,12 +3,16 @@
 #include "StepMotor.h"
 #include "GcodeParser.h"
 
+#include "thermistor.h"
+
+thermistor therm1(TEMP_0_PIN, 70);
+
 int head = 1;
 
 void setup() {
 
 	step_init();
-
+	endstop_init();
 
 	//pinMode(TEMP_0_PIN,INPUT);
 	pinMode(HEATER_0_PIN,OUTPUT);
@@ -29,6 +33,21 @@ void setup() {
 	//	tmp.Set_StepBuffer((xy_pos[head][0] - xy_pos[head - 1][0]), (xy_pos[head][1] - xy_pos[head - 1][1]), 0, 0, xy_pos[head ][2]);
 	//	stepbuffer.PushBack(tmp);
 	//}
+	while (!endstop_getStatus('x')) {
+		digitalWrite(X_STEP_PIN, (X_STEP = !X_STEP));
+		delayMicroseconds(400);
+	}
+
+	while (!endstop_getStatus('y')) {
+		digitalWrite(Y_STEP_PIN, (Y_STEP = !Y_STEP));
+		delayMicroseconds(400);
+	}
+
+
+	//while (!endstop_getStatus('z')) {
+	//	digitalWrite(E1_STEP_PIN, (Z_STEP = !Z_STEP));
+	//	delayMicroseconds(400);
+	//}
 
 	for (head = 0; head < 20; head++) {
 		gcode_parse();
@@ -39,21 +58,24 @@ void setup() {
 
 	//TIMSK1 = 0x02;
 
+
 }
 
 void loop() {
+
+	int temp = therm1.analog2temp();
 
 	if ((stepbuffer.Size() < 30)) {
 		gcode_parse();
 	}
 
-	if (analogRead(TEMP_0_PIN) > 50) {
+	if (temp < 250) {
 		digitalWrite(HEATER_0_PIN,HIGH);
 	}
-	else if (analogRead(TEMP_0_PIN) < 40) {
+	else if (temp >= 240) {
 		digitalWrite(HEATER_0_PIN, LOW);
 	}
 
-	Serial.println(analogRead(TEMP_0_PIN));
+	Serial.println(analogRead(HEATER_0_PIN));
 
 }

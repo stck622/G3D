@@ -64,11 +64,14 @@ int endstop_getStatus(char pos) {
 
 void set_step() {
 
-	if (X_MOVE_COM && Y_MOVE_COM) {
+	if (X_MOVE_COM && Y_MOVE_COM && E_MOVE_COM) {
 
 		if (!stepbuffer.Empty()) {
 
 			//Serial.println("run");
+
+			Serial.print("E: ");
+			Serial.println(E_SPEED);
 
 			X_GOAL = stepbuffer.Back().X_STEP_CNT*2;
 			Y_GOAL = stepbuffer.Back().Y_STEP_CNT*2;
@@ -92,17 +95,18 @@ void set_step() {
 
 			OCR1A = X_SPEED;
 			OCR3A = Y_SPEED;
-			OCR4A = Z_SPEED;
+			//OCR4A = Z_SPEED;
 			OCR5A = E_SPEED;
 
 			X_MOVE_COM = false;
+			Y_MOVE_COM = false;
 			Y_MOVE_COM = false;
 
 			stepbuffer.Erase(0);
 
 			TIMSK1 = 0x02;
 			TIMSK3 = 0x02;
-			TIMSK4 = 0x02;
+			//TIMSK4 = 0x02;
 			TIMSK5 = 0x02;
 
 		}
@@ -160,13 +164,14 @@ void step_init() {
 	pinMode(E0_STEP_PIN, OUTPUT);
 	pinMode(E0_DIR_PIN, OUTPUT);
 	pinMode(E0_ENABLE_PIN, OUTPUT);
+	digitalWrite(E0_DIR_PIN, E_DIR_DEF);
 
 	//E0 TIMER
 	TCCR5A = 0x00;
 	TCCR5B = 0x0A;
 	TCCR5C = 0x00;
 
-	OCR5A = 800;
+	OCR5A = 172;
 
 }
 
@@ -224,7 +229,7 @@ SIGNAL(TIMER4_COMPA_vect) {
 			Z_STEP = !Z_STEP;
 			digitalWrite(E1_STEP_PIN, Z_STEP);
 			if (Z_STEP) {
-				Z_CNT++;
+				//Z_CNT++;
 			}
 		}
 	}
@@ -238,18 +243,18 @@ SIGNAL(TIMER4_COMPA_vect) {
 //E0≈∏¿Ã∏”
 SIGNAL(TIMER5_COMPA_vect) {
 
-	if (E_GOAL != E_CNT)
+	if ((E_GOAL) != E_CNT)
 	{
-		E_STEP = !E_STEP;
-		digitalWrite(E0_STEP_PIN, E_STEP);
-		if (E_STEP) {
-			E_CNT++;
-		}
-
+		digitalWrite(E0_STEP_PIN, (E_STEP = !E_STEP));
+		E_CNT++;
 	}
 	else
 	{
-		TIMSK5 = 0x00;
+		TIMSK5 = 0X00;
+		E_MOVE_COM = true;
+		E_CNT = 0;
+		set_step();
+
 	}
 
 }
