@@ -1,8 +1,8 @@
 ﻿#include <SD.h>
+#include "util.h"
 #include "Status.h"
 #include "StepMotor.h"
 #include "GcodeParser.h"
-
 #include "thermistor.h"
 
 thermistor therm1(TEMP_0_PIN, 70);
@@ -44,17 +44,21 @@ void setup() {
 	}
 
 
-	//while (!endstop_getStatus('z')) {
-	//	digitalWrite(E1_STEP_PIN, (Z_STEP = !Z_STEP));
-	//	delayMicroseconds(400);
-	//}
+	while (!endstop_getStatus('z')) {
+		digitalWrite(E1_STEP_PIN, (Z_STEP = !Z_STEP));
+		delayMicroseconds(400);
+	}
 
 	for (head = 0; head < 20; head++) {
 		gcode_parse();
 	}
 
 	Serial.println("run");
+	double a = 62.30;
+	int b = 1066;
 
+	Serial.println(double_tlqkf(10.1254));
+	Serial.println(a*b/5.04);
 
 	//TIMSK1 = 0x02;
 
@@ -62,6 +66,17 @@ void setup() {
 }
 
 void loop() {
+
+	if (Serial.available()) {
+		switch (Serial.read())
+		{
+		case 'a':
+			TIMSK1 = 0x02;
+			break;
+		default:
+			break;
+		}
+	}
 
 	int temp = therm1.analog2temp();
 
@@ -76,6 +91,6 @@ void loop() {
 		digitalWrite(HEATER_0_PIN, LOW);
 	}
 
-	Serial.println(analogRead(HEATER_0_PIN));
+	//Serial.println(analogRead(HEATER_0_PIN));
 
 }

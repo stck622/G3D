@@ -68,11 +68,6 @@ void set_step() {
 
 		if (!stepbuffer.Empty()) {
 
-			//Serial.println("run");
-
-			Serial.print("E: ");
-			Serial.println(E_SPEED);
-
 			X_GOAL = stepbuffer.Back().X_STEP_CNT*2;
 			Y_GOAL = stepbuffer.Back().Y_STEP_CNT*2;
 			Z_GOAL = stepbuffer.Back().Z_STEP_CNT*2;
@@ -100,7 +95,7 @@ void set_step() {
 
 			X_MOVE_COM = false;
 			Y_MOVE_COM = false;
-			Y_MOVE_COM = false;
+			E_MOVE_COM = false;
 
 			stepbuffer.Erase(0);
 
@@ -126,7 +121,7 @@ void step_init() {
 	TCCR1B = 0x0A;
 	TCCR1C = 0x00;
 
-	OCR1A = 400;
+	OCR1A = 200;
 
 
 	//Y PIN
@@ -139,7 +134,7 @@ void step_init() {
 	TCCR3B = 0x0A;
 	TCCR3C = 0x00;
 
-	OCR3A = 400;
+	OCR3A = 200;
 
 
 	//Z1 STEP
@@ -157,7 +152,7 @@ void step_init() {
 	TCCR4B = 0x0A;
 	TCCR4C = 0x00;
 
-	OCR4A = 400;
+	OCR4A = 200;
 
 
 	//E0 STEP

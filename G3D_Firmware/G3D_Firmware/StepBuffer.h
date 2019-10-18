@@ -101,16 +101,28 @@ public:
 			E_SPEED = 0;
 
 		}
-		else if (X_MM ) {
-			X_SPEED = DEF_SPEED*2;
+		else if (X_MM) {
+			X_SPEED = DEF_SPEED;
 			if (E_MM != 0.0) {
-				E_SPEED = ((X_SPEED * abs(E_MM)*110) / abs(X_MM));
+				//E_SPEED = ((X_SPEED * abs(E_MM)*110) / abs(X_MM));
+				E_SPEED = abs(X_SPEED * (((long)(abs(X_MM) * 100)) / 100)) / abs(E_MM);
+				Serial.print("X_SPEED : ");
+				Serial.println(X_SPEED);
+				Serial.print("E_SPEED : ");
+				Serial.println(E_SPEED);
+				Serial.print("X_MM : ");
+				Serial.println(X_MM);
+				Serial.print("E_MM : ");
+				Serial.println(E_MM);
+				Serial.print("Result : ");
+				Serial.println((double_tlqkf(X_MM) * X_SPEED)/ double_tlqkf(E_MM));
 			}
 		}
-		else if (Y_MM ){
-			Y_SPEED = DEF_SPEED * 2;
+		else if (Y_MM) {
+			Y_SPEED = DEF_SPEED;
 			if (E_MM != 0.0) {
-				E_SPEED = ((Y_SPEED * abs(E_MM)*110) / abs(Y_MM));
+				//E_SPEED = ((Y_SPEED * abs(E_MM)*110) / abs(Y_MM));
+				E_SPEED = abs(Y_SPEED * abs(Y_MM)) / abs(E_MM);
 			}
 		}
 
