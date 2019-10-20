@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="G3D_Firmware.ino" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="__vm\.G3D_Firmware.vsarduino.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PinMap.h" />
+    <ClInclude Include="sample_gcode.h" />
+    <ClInclude Include="EndStop.h" />
+    <ClInclude Include="StepMotor.h" />
+    <ClInclude Include="Status.h" />
+    <ClInclude Include="StepBuffer.h" />
+    <ClInclude Include="C:\Users\KWB\Desktop\Vector-1.1.2\src\Vector.h" />
+    <ClInclude Include="GcodeParser.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="StepBuffer.cpp" />
+  </ItemGroup>
+</Project>
