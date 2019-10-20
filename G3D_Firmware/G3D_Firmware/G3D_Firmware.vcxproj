@@ -77,10 +77,10 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\G3D_Firmware;C:\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino;C:\Program Files (x86)\Arduino\hardware\arduino\avr\variants\mega;C:\Users\KWB\Desktop\Vector-1.1.2\src;C:\Program Files (x86)\Arduino\hardware\tools\avr\avr\include;C:\Program Files (x86)\Arduino\hardware\tools\avr\avr\include\avr;C:\Program Files (x86)\Arduino\hardware\tools\avr\lib\gcc\avr\4.8.1\include;C:\Program Files (x86)\Arduino\hardware\tools\avr\lib\gcc\avr\4.9.2\include;C:\Program Files (x86)\Arduino\hardware\tools\avr\lib\gcc\avr\4.9.3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\G3D_Firmware;$(ProjectDir)..\..\..\..\arduino-1.8.10-windows\arduino-1.8.10\libraries\SD\src;$(ProjectDir)..\..\..\..\arduino-1.8.10-windows\arduino-1.8.10\hardware\arduino\avr\libraries\SPI\src;$(ProjectDir)..\..\..\..\..\Documents\Arduino\libraries\ThermistorLibrary-master\src;$(ProjectDir)..\..\..\..\arduino-1.8.10-windows\arduino-1.8.10\libraries\SD\src\utility;$(ProjectDir)..\..\..\..\arduino-1.8.10-windows\arduino-1.8.10\hardware\arduino\avr\cores\arduino;$(ProjectDir)..\..\..\..\arduino-1.8.10-windows\arduino-1.8.10\hardware\arduino\avr\variants\mega;$(ProjectDir)..\..\..\..\arduino-1.8.10-windows\arduino-1.8.10\hardware\tools\avr\avr\include;$(ProjectDir)..\..\..\..\arduino-1.8.10-windows\arduino-1.8.10\hardware\tools\avr\avr\include\avr;$(ProjectDir)..\..\..\..\arduino-1.8.10-windows\arduino-1.8.10\hardware\tools\avr\lib\gcc\avr\4.9.2\include;$(ProjectDir)..\..\..\..\arduino-1.8.10-windows\arduino-1.8.10\hardware\tools\avr\lib\gcc\avr\4.9.2\include;$(ProjectDir)..\..\..\..\arduino-1.8.10-windows\arduino-1.8.10\hardware\tools\avr\lib\gcc\avr\4.9.3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>$(ProjectDir)__vm\.G3D_Firmware.vsarduino.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <IgnoreStandardIncludePath>true</IgnoreStandardIncludePath>
-      <PreprocessorDefinitions>__AVR_atmega2560__;__AVR_ATmega2560__;F_CPU=16000000L;ARDUINO=10809;ARDUINO_AVR_MEGA2560;ARDUINO_ARCH_AVR;__cplusplus=201103L;_VMICRO_INTELLISENSE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>__AVR_atmega2560__;__AVR_ATmega2560__;F_CPU=16000000L;ARDUINO=108010;ARDUINO_AVR_MEGA2560;ARDUINO_ARCH_AVR;__cplusplus=201103L;_VMICRO_INTELLISENSE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -115,25 +115,56 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="C:\Users\KWB\Desktop\Vector-1.1.2\src\Vector.h" />
-    <ClInclude Include="EndStop.h" />
+    <ClInclude Include="Conditionals.h" />
+    <ClInclude Include="Configuration.h" />
     <ClInclude Include="GcodeParser.h" />
-    <ClInclude Include="PinMap.h" />
-    <ClInclude Include="sample_gcode.h" />
     <ClInclude Include="Status.h" />
     <ClInclude Include="StepBuffer.h" />
     <ClInclude Include="StepMotor.h" />
+    <ClInclude Include="thermistor.h" />
+    <ClInclude Include="thermistornames.h" />
+    <ClInclude Include="Thermistortables.h" />
+    <ClInclude Include="thermistortable_1.h" />
+    <ClInclude Include="thermistortable_10.h" />
+    <ClInclude Include="thermistortable_1010.h" />
+    <ClInclude Include="thermistortable_1047.h" />
+    <ClInclude Include="thermistortable_11.h" />
+    <ClInclude Include="thermistortable_110.h" />
+    <ClInclude Include="thermistortable_12.h" />
+    <ClInclude Include="thermistortable_13.h" />
+    <ClInclude Include="thermistortable_147.h" />
+    <ClInclude Include="thermistortable_2.h" />
+    <ClInclude Include="thermistortable_20.h" />
+    <ClInclude Include="thermistortable_3.h" />
+    <ClInclude Include="thermistortable_4.h" />
+    <ClInclude Include="thermistortable_5.h" />
+    <ClInclude Include="thermistortable_51.h" />
+    <ClInclude Include="thermistortable_52.h" />
+    <ClInclude Include="thermistortable_55.h" />
+    <ClInclude Include="thermistortable_6.h" />
+    <ClInclude Include="thermistortable_60.h" />
+    <ClInclude Include="thermistortable_66.h" />
+    <ClInclude Include="thermistortable_7.h" />
+    <ClInclude Include="thermistortable_70.h" />
+    <ClInclude Include="thermistortable_71.h" />
+    <ClInclude Include="thermistortable_75.h" />
+    <ClInclude Include="thermistortable_8.h" />
+    <ClInclude Include="thermistortable_80.h" />
+    <ClInclude Include="thermistortable_9.h" />
+    <ClInclude Include="thermistortable_998.h" />
+    <ClInclude Include="thermistortable_999.h" />
+    <ClInclude Include="Vector.h" />
     <ClInclude Include="__vm\.G3D_Firmware.vsarduino.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="StepBuffer.cpp" />
+    <ClCompile Include="thermistor.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties config.Debug.customdebug_mega_atmega2560_debugger_type="none" arduino.upload.port="COM12" />
+      <UserProperties config.Debug.customdebug_mega_atmega2560_debugger_type="none" arduino.upload.port="COM6" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

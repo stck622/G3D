@@ -10,32 +10,32 @@ static bool Y_EN = true;
 static bool Z_EN = true;
 static bool E_EN = true;
 
-static long X_GOAL = 0;
-static long Y_GOAL = 0;
-static long Z_GOAL = 0;
-static long E_GOAL = 0;
+static int X_GOAL = 0;
+static int Y_GOAL = 0;
+static int Z_GOAL = 0;
+static int E_GOAL = 0;
 
-static long X_CNT = 0;
-static long Y_CNT = 0;
-static long Z_CNT = 0;
-static long E_CNT = 0;
+static int X_CNT = 0;
+static int Y_CNT = 0;
+static int Z_CNT = 0;
+static int E_CNT = 0;
 
 static bool X_STEP = true;
 static bool Y_STEP = true;
 static bool Z_STEP = true;
 static bool E_STEP = true;
 
-static long X_POS = true;
-static long Y_POS = true;
-static long Z_POS = true;
-static long E_POS = true;
+static int X_POS = true;
+static int Y_POS = true;
+static int Z_POS = true;
+static int E_POS = true;
 
 static bool X_HOME = false;
 static bool Y_HOME = false;
 static bool Z_HOME = false;
 
-volatile bool X_MOVE_COM = true; //완료면 true, 미완료만 false
-volatile bool Y_MOVE_COM = true;
+static bool X_MOVE_COM = true; //완료면 true, 미완료만 false
+static bool Y_MOVE_COM = true;
 static bool Z_MOVE_COM = true;
 static bool E_MOVE_COM = true;
 
@@ -49,6 +49,10 @@ bool X_DIR_DEF = true;
 bool Y_DIR_DEF = true;
 bool Z_DIR_DEF = true;
 bool E_DIR_DEF = true;
+
+double sd_x_mm = 0;
+double sd_y_mm = 0;
+double sd_e_mm = 0;
 
 #define X_STEP_PIN         54
 #define X_DIR_PIN          55

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "StepBuffer.h"
+
 //스텝모터 고정 설정 true : 고정 / false : 해제
 void step_lock(char pos, bool value) {
 
@@ -60,6 +62,52 @@ int endstop_getStatus(char pos) {
 	}
 }
 
+void set_step() {
+
+	if (X_MOVE_COM && Y_MOVE_COM && E_MOVE_COM) {
+
+		if (!stepbuffer.Empty()) {
+
+			X_GOAL = stepbuffer.Back().X_STEP_CNT*2;
+			Y_GOAL = stepbuffer.Back().Y_STEP_CNT*2;
+			Z_GOAL = stepbuffer.Back().Z_STEP_CNT*2;
+			E_GOAL = stepbuffer.Back().E_STEP_CNT*2;
+
+			X_DIR = stepbuffer.Back().X_DIR;
+			Y_DIR = stepbuffer.Back().Y_DIR;
+			Z_DIR = stepbuffer.Back().Z_DIR;
+			E_DIR = stepbuffer.Back().E_DIR;
+
+			X_SPEED = stepbuffer.Back().X_SPEED;
+			Y_SPEED = stepbuffer.Back().Y_SPEED;
+			Z_SPEED = stepbuffer.Back().Z_SPEED;
+			E_SPEED = stepbuffer.Back().E_SPEED;
+
+			digitalWrite(X_DIR_PIN,X_DIR);
+			digitalWrite(Y_DIR_PIN, Y_DIR);
+			digitalWrite(Z_DIR_PIN, Z_DIR);
+			digitalWrite(E1_DIR_PIN, E_DIR);
+
+			OCR1A = X_SPEED;
+			OCR3A = Y_SPEED;
+			//OCR4A = Z_SPEED;
+			OCR5A = E_SPEED;
+
+			X_MOVE_COM = false;
+			Y_MOVE_COM = false;
+			E_MOVE_COM = false;
+
+			stepbuffer.Erase(0);
+
+			TIMSK1 = 0x02;
+			TIMSK3 = 0x02;
+			//TIMSK4 = 0x02;
+			TIMSK5 = 0x02;
+
+		}
+	}
+
+}
 
 void step_init() {
 
@@ -73,7 +121,7 @@ void step_init() {
 	TCCR1B = 0x0A;
 	TCCR1C = 0x00;
 
-	OCR1A = 400;
+	OCR1A = 200;
 
 
 	//Y PIN
@@ -86,7 +134,7 @@ void step_init() {
 	TCCR3B = 0x0A;
 	TCCR3C = 0x00;
 
-	OCR3A = 400;
+	OCR3A = 200;
 
 
 	//Z1 STEP
@@ -104,20 +152,21 @@ void step_init() {
 	TCCR4B = 0x0A;
 	TCCR4C = 0x00;
 
-	OCR4A = 400;
+	OCR4A = 200;
 
 
 	//E0 STEP
 	pinMode(E0_STEP_PIN, OUTPUT);
 	pinMode(E0_DIR_PIN, OUTPUT);
 	pinMode(E0_ENABLE_PIN, OUTPUT);
+	digitalWrite(E0_DIR_PIN, E_DIR_DEF);
 
 	//E0 TIMER
 	TCCR5A = 0x00;
 	TCCR5B = 0x0A;
 	TCCR5C = 0x00;
 
-	OCR5A = 800;
+	OCR5A = 172;
 
 }
 
@@ -125,19 +174,18 @@ void step_init() {
 //x타이머
 SIGNAL(TIMER1_COMPA_vect) {
 
-	if ((X_GOAL) != X_POS)
+	if ((X_GOAL) != X_CNT)
 	{
-		//Serial.println("start X");
 		digitalWrite(X_STEP_PIN, (X_STEP = !X_STEP));
-		X_POS = ((X_GOAL > X_POS) ? X_POS + 1 : X_POS - 1);
-		//Serial.println("X_POS  : " + String(X_POS));
-		//Serial.println("X_GOAL : " + String(X_GOAL));
+		X_CNT++;
 	}
 	else
 	{
-		X_MOVE_COM = false;
 		TIMSK1 = 0X00;
-		//Serial.println("end X");
+		X_MOVE_COM = true;
+		X_CNT = 0;
+		set_step();
+
 	}
 
 }
@@ -146,19 +194,17 @@ SIGNAL(TIMER1_COMPA_vect) {
 //y타이머
 SIGNAL(TIMER3_COMPA_vect) {
 
-	if (Y_GOAL != Y_POS)
+	if ((Y_GOAL) != Y_CNT)
 	{
-		//Serial.println("start Y");
 		digitalWrite(Y_STEP_PIN, (Y_STEP = !Y_STEP));
-		Y_POS = ((Y_GOAL > Y_POS) ? Y_POS + 1 : Y_POS - 1);
-		//Serial.println("Y_POS  : " + String(Y_POS));
-		//Serial.println("Y_GOAL : " + String(Y_GOAL));
+		Y_CNT++;
 	}
 	else
 	{
-		Y_MOVE_COM = false;
 		TIMSK3 = 0X00;
-		//Serial.println("end Y");
+		Y_MOVE_COM = true;
+		Y_CNT = 0;
+		set_step();
 	}
 
 }
@@ -178,7 +224,7 @@ SIGNAL(TIMER4_COMPA_vect) {
 			Z_STEP = !Z_STEP;
 			digitalWrite(E1_STEP_PIN, Z_STEP);
 			if (Z_STEP) {
-				Z_CNT++;
+				//Z_CNT++;
 			}
 		}
 	}
@@ -192,18 +238,18 @@ SIGNAL(TIMER4_COMPA_vect) {
 //E0타이머
 SIGNAL(TIMER5_COMPA_vect) {
 
-	if (E_GOAL != E_CNT)
+	if ((E_GOAL) != E_CNT)
 	{
-		E_STEP = !E_STEP;
-		digitalWrite(E0_STEP_PIN, E_STEP);
-		if (E_STEP) {
-			E_CNT++;
-		}
-
+		digitalWrite(E0_STEP_PIN, (E_STEP = !E_STEP));
+		E_CNT++;
 	}
 	else
 	{
-		TIMSK5 = 0x00;
+		TIMSK5 = 0X00;
+		E_MOVE_COM = true;
+		E_CNT = 0;
+		set_step();
+
 	}
 
 }
