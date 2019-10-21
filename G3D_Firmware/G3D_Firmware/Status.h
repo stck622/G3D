@@ -1,58 +1,64 @@
 #pragma once
 
-static bool X_DIR = true;
-static bool Y_DIR = true;
-static bool Z_DIR = true;
-static bool E_DIR = true;
+bool X_DIR = true;
+bool Y_DIR = true;
+bool Z_DIR = true;
+bool E_DIR = true;
 
-static bool X_EN = true;
-static bool Y_EN = true;
-static bool Z_EN = true;
-static bool E_EN = true;
+bool X_EN = true;
+bool Y_EN = true;
+bool Z_EN = true;
+bool E_EN = true;
 
-static int X_GOAL = 0;
-static int Y_GOAL = 0;
-static int Z_GOAL = 0;
-static int E_GOAL = 0;
+int X_GOAL = 0;
+int Y_GOAL = 0;
+int Z_GOAL = 0;
+int E_GOAL = 0;
 
-static int X_CNT = 0;
-static int Y_CNT = 0;
-static int Z_CNT = 0;
-static int E_CNT = 0;
+int X_CNT = 0;
+int Y_CNT = 0;
+int Z_CNT = 0;
+int E_CNT = 0;
 
-static bool X_STEP = true;
-static bool Y_STEP = true;
-static bool Z_STEP = true;
-static bool E_STEP = true;
+bool X_STEP = true;
+bool Y_STEP = true;
+bool Z_STEP = true;
+bool E_STEP = true;
 
-static int X_POS = true;
-static int Y_POS = true;
-static int Z_POS = true;
-static int E_POS = true;
+volatile long X_POS ;
+volatile long Y_POS ;
+volatile long Z_POS ;
+volatile long E_POS;
 
-static bool X_HOME = false;
-static bool Y_HOME = false;
-static bool Z_HOME = false;
+volatile long X_CNT_POS;
+volatile long Y_CNT_POS;
+volatile long Z_CNT_POS;
+volatile long E_CNT_POS;
 
-static bool X_MOVE_COM = true; //완료면 true, 미완료만 false
-static bool Y_MOVE_COM = true;
-static bool Z_MOVE_COM = true;
-static bool E_MOVE_COM = true;
+volatile long X_CNT_GOAL;
+volatile long Y_CNT_GOAL;
+volatile long Z_CNT_GOAL;
+volatile long E_CNT_GOAL;
 
-static int DEF_SPEED = 700;
-static int X_SPEED = DEF_SPEED;
-static int Y_SPEED = DEF_SPEED;
-static int Z_SPEED = DEF_SPEED;
-static int E_SPEED = DEF_SPEED;
+bool X_HOME = false;
+bool Y_HOME = false;
+bool Z_HOME = false;
+
+bool X_MOVE_COM = true; //완료면 true, 미완료만 false
+bool Y_MOVE_COM = true;
+bool Z_MOVE_COM = true;
+bool E_MOVE_COM = true;
+
+int DEF_SPEED = 700;
+int X_SPEED = DEF_SPEED;
+int Y_SPEED = DEF_SPEED;
+int Z_SPEED = DEF_SPEED;
+int E_SPEED = DEF_SPEED;
 
 bool X_DIR_DEF = true;
 bool Y_DIR_DEF = true;
 bool Z_DIR_DEF = true;
 bool E_DIR_DEF = true;
-
-double sd_x_mm = 0;
-double sd_y_mm = 0;
-double sd_e_mm = 0;
 
 #define X_STEP_PIN         54
 #define X_DIR_PIN          55

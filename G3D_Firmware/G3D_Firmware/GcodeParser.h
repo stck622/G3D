@@ -41,19 +41,16 @@ void gcode_parse() {
 
 	String str = sd_get_line();
 
-	//if (str.indexOf(";")) return;
-
-	//Serial.println(((int)get_value(str, "G")) == 92);
-
 	if (((int)get_value(str, "G")) == 1) {
-
-		//Serial.println(str);
 
 		double x_mm = get_value(str, "X"),
 			y_mm = get_value(str, "Y"),
 			z_mm = get_value(str, "Z"),
 			e_mm = get_value(str, "E"),
 			feedrate = get_value(str, "F");
+
+		if (x_mm == 0 && y_mm == 0) return;
+
 		StepBuffer tmp;
 
 		tmp.Set_StepBuffer((x_mm ), (y_mm ), 0, e_mm, feedrate);
