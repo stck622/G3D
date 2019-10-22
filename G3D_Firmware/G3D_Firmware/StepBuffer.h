@@ -17,21 +17,33 @@ public:
 	int E_STEP_CNT;
 	int E_SPEED;
 
-	void Set_StepBuffer(double X_MM, double Y_MM, double Z_MM, double  E_MM, int FEEDRATE) {
+	int G_CODE;
 
-		X_STEP_CNT = X_MM * 100;
-		Y_STEP_CNT = Y_MM * 100;
-		Z_STEP_CNT = Z_MM * 100;
-		E_STEP_CNT = E_MM * 110;
+	void Set_StepBuffer(int code, double X_MM, double Y_MM, double Z_MM, double  E_MM, int FEEDRATE) {
+		G_CODE = code;
+		switch (code) {
+		case 1:
+			X_STEP_CNT = X_MM * 100;
+			Y_STEP_CNT = Y_MM * 100;
+			Z_STEP_CNT = Z_MM * 100;
+			E_STEP_CNT = E_MM * 110;
 
-		if (FEEDRATE > 1) {
-			DEF_SPEED = ((1000.0 * 1000.0) / ((FEEDRATE / 60.0) * 100.0));
+			if (FEEDRATE > 1) {
+				DEF_SPEED = ((1000.0 * 1000.0) / ((FEEDRATE / 60.0) * 100.0));
+			}
+
+			X_SPEED = DEF_SPEED * 2;
+			Y_SPEED = DEF_SPEED * 2;
+			Z_SPEED = DEF_SPEED * 2;
+			E_SPEED = DEF_SPEED * 2;
+
+			break;
+
+		case 92:
+			E_STEP_CNT = E_MM;
+
+			break;
 		}
-
-		X_SPEED = DEF_SPEED * 2;
-		Y_SPEED = DEF_SPEED * 2;
-		Z_SPEED = DEF_SPEED * 2;
-		E_SPEED = DEF_SPEED * 2;
 
 	}
 
@@ -54,7 +66,7 @@ volatile bool brm_com = true;
 
 void Set_Bresenham(long x1, long y1, long x2, long y2) {
 
-	Serial.println(String(x1) + ", "+ String(y1) + " TO  " + String(x2) + ", " + String(y2));
+	//Serial.println(String(x1) + ", "+ String(y1) + " TO  " + String(x2) + ", " + String(y2));
 
 	dx = x2 - x1;
 	dy = y2 - y1;
@@ -82,6 +94,16 @@ void Set_Bresenham(long x1, long y1, long x2, long y2) {
 	{
 		addY = 1;
 	}
+
+	if (dx >= dy) {
+		OCR5A = abs(stepbuffer.Back().X_SPEED * (((long)(abs(stepbuffer.Back().X_STEP_CNT - X_GOAL) * 100)) / 100)) / abs(E_GOAL - stepbuffer.Back().E_STEP_CNT);
+	}
+	else {
+		OCR5A = abs(stepbuffer.Back().Y_SPEED * (((long)(abs(stepbuffer.Back().Y_STEP_CNT - Y_GOAL) * 100)) / 100)) / abs(E_GOAL - stepbuffer.Back().E_STEP_CNT);
+	}
+
+	//Serial.println("SPEED : " + String(OCR5A));
+
 	brm_com = false;
 }
 
@@ -102,13 +124,12 @@ void Calc_Bresenham()
 				y += addY;
 				counter -= dx;
 			}
-			X_CNT_GOAL = x * 2;
-			Y_CNT_GOAL = y * 2;
 			X_GOAL = x;
 			Y_GOAL = y;
 			brm_i++;
-		} else 
-		brm_com = true;
+		}
+		else
+			brm_com = true;
 	}
 	else
 	{
@@ -123,14 +144,12 @@ void Calc_Bresenham()
 				counter -= dy;
 			}
 
-			X_CNT_GOAL = x *2;
-			Y_CNT_GOAL = y *2;
-
 			X_GOAL = x;
 			Y_GOAL = y;
 			brm_i++;
-		} else 
-		brm_com = true;
+		}
+		else
+			brm_com = true;
 	}
 }
 
@@ -139,35 +158,60 @@ void set_step() {
 
 	if (!stepbuffer.Empty()) {
 
-		if (X_MOVE_COM && Y_MOVE_COM) {
 
-			if (brm_com) {
 
-				if (stepbuffer.Back().X_STEP_CNT != 0 && stepbuffer.Back().Y_STEP_CNT != 0) {
+		if (brm_com) {
+
+			if (X_MOVE_COM && Y_MOVE_COM && E_MOVE_COM) {
+
+				switch (stepbuffer.Back().G_CODE)
+				{
+				case 1:
 					Set_Bresenham(X_GOAL, Y_GOAL, stepbuffer.Back().X_STEP_CNT, stepbuffer.Back().Y_STEP_CNT);
+
+
+					if (stepbuffer.Back().E_STEP_CNT) {
+						E_GOAL = stepbuffer.Back().E_STEP_CNT;
+					}
+
+					OCR1A = stepbuffer.Back().X_SPEED;
+					OCR3A = stepbuffer.Back().Y_SPEED;
+
+					X_MOVE_COM = false;
+					Y_MOVE_COM = false;
+					E_MOVE_COM = false;
+
+					stepbuffer.Erase(0);
+					break;
+
+				case 0:
+					Set_Bresenham(X_GOAL, Y_GOAL, stepbuffer.Back().X_STEP_CNT, stepbuffer.Back().Y_STEP_CNT);
+
+
+					if (stepbuffer.Back().E_STEP_CNT) {
+						E_GOAL = stepbuffer.Back().E_STEP_CNT;
+					}
+
+					OCR1A = stepbuffer.Back().X_SPEED;
+					OCR3A = stepbuffer.Back().Y_SPEED;
+
+					X_MOVE_COM = false;
+					Y_MOVE_COM = false;
+					E_MOVE_COM = false;
+
+					stepbuffer.Erase(0);
+					break;
+
+				case 92:
+					E_POS = stepbuffer.Back().E_STEP_CNT;
+					stepbuffer.Erase(0);
+					break;
 				}
-				else {
-					X_CNT_GOAL = stepbuffer.Back().X_STEP_CNT * 2;
-					Y_CNT_GOAL = stepbuffer.Back().Y_STEP_CNT * 2;
-					X_GOAL = stepbuffer.Back().X_STEP_CNT;
-					Y_GOAL = stepbuffer.Back().X_STEP_CNT;
-				}
-				OCR1A = stepbuffer.Back().X_SPEED;
-				OCR3A = stepbuffer.Back().Y_SPEED;
-				//OCR4A = Z_SPEED;
-				//OCR5A = E_SPEED;
 
-				X_MOVE_COM = false;
-				Y_MOVE_COM = false;
-				E_MOVE_COM = false;
-
-				stepbuffer.Erase(0);
-
-				Serial.println("read ok");
-			} else {
-				Calc_Bresenham();
 			}
 
+		} else if (X_MOVE_COM && Y_MOVE_COM) {
+			Calc_Bresenham();
 		}
 	}
 

@@ -13,7 +13,8 @@ void setup() {
 	endstop_init();
 
 	pinMode(FAN_PIN, OUTPUT);
-
+	pinMode(HEATER_0_PIN, OUTPUT);
+	pinMode(TEMP_0_PIN,INPUT);
 	digitalWrite(FAN_PIN,HIGH);
 
 	step_lock('a', true);
@@ -21,7 +22,7 @@ void setup() {
 	sd_init();
 
 
-	sd_open_file("sample.txt");
+	sd_open_file("sample2.txt");
 
 	Serial.println("read");
 
@@ -35,10 +36,10 @@ void setup() {
 		delayMicroseconds(400);
 	}
 
-	//while (!endstop_getStatus('z')) {
-	//	digitalWrite(E1_STEP_PIN, (Z_STEP = !Z_STEP));
-	//	delayMicroseconds(400);
-	//}
+	while (!endstop_getStatus('z')) {
+		digitalWrite(E1_STEP_PIN, (Z_STEP = !Z_STEP));
+		delayMicroseconds(400);
+	}
 
 	for (head = 0; head < 20; head++) {
 		gcode_parse();
@@ -49,17 +50,28 @@ void setup() {
 
 void loop() {
 
+	//Serial.println(analogRead(TEMP_0_PIN));
+	if (analogRead(TEMP_0_PIN) > 40) {
+		digitalWrite(HEATER_0_PIN,HIGH);
+	}
+	else if (analogRead(TEMP_0_PIN) < 30) {
+		digitalWrite(HEATER_0_PIN, LOW);
+	}
+
 	if (Serial.available()) {
 		switch (Serial.read())
 		{
 		case 'a':
-			X_GOAL = 100*100;
-			Y_GOAL = 100*100;
+			OCR5A = 8000;
+			TIMSK5 = 0x02;
+			E_GOAL = 100 * 10;
 			break;
 		case 'b':
 
 			TIMSK1 = 0x02;
 			TIMSK3 = 0x02;
+			TIMSK5 = 0x02;
+
 			break;
 		default:
 			break;

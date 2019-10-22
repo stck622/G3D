@@ -10,35 +10,20 @@ bool Y_EN = true;
 bool Z_EN = true;
 bool E_EN = true;
 
-int X_GOAL = 0;
-int Y_GOAL = 0;
-int Z_GOAL = 0;
-int E_GOAL = 0;
+volatile long X_GOAL = 0;
+volatile long Y_GOAL = 0;
+volatile long Z_GOAL = 0;
+volatile long E_GOAL = 0;
 
-int X_CNT = 0;
-int Y_CNT = 0;
-int Z_CNT = 0;
-int E_CNT = 0;
-
-bool X_STEP = true;
-bool Y_STEP = true;
-bool Z_STEP = true;
-bool E_STEP = true;
+volatile bool X_STEP = true;
+volatile bool Y_STEP = true;
+volatile bool Z_STEP = true;
+volatile bool E_STEP = true;
 
 volatile long X_POS ;
 volatile long Y_POS ;
 volatile long Z_POS ;
 volatile long E_POS;
-
-volatile long X_CNT_POS;
-volatile long Y_CNT_POS;
-volatile long Z_CNT_POS;
-volatile long E_CNT_POS;
-
-volatile long X_CNT_GOAL;
-volatile long Y_CNT_GOAL;
-volatile long Z_CNT_GOAL;
-volatile long E_CNT_GOAL;
 
 bool X_HOME = false;
 bool Y_HOME = false;

@@ -41,7 +41,7 @@ void gcode_parse() {
 
 	String str = sd_get_line();
 
-	if (((int)get_value(str, "G")) == 1) {
+	if (((get_value(str, "G")) == 1) || ((get_value(str, "G")) == 92) ) {
 
 		double x_mm = get_value(str, "X"),
 			y_mm = get_value(str, "Y"),
@@ -53,7 +53,7 @@ void gcode_parse() {
 
 		StepBuffer tmp;
 
-		tmp.Set_StepBuffer((x_mm ), (y_mm ), 0, e_mm, feedrate);
+		tmp.Set_StepBuffer(get_value(str, "G"),(x_mm), (y_mm), 0, e_mm, feedrate);
 
 		stepbuffer.PushBack(tmp);
 
