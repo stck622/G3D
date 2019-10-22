@@ -116,7 +116,7 @@ void step_init() {
 	OCR5A = 172;
 
 
-	TIMSK1 = 0x02;
-	TIMSK3 = 0x02;
+	//TIMSK1 = 0x02;
+	//TIMSK3 = 0x02;
 
 }

@@ -5,9 +5,10 @@
 //x타이머
 SIGNAL(TIMER1_COMPA_vect) {
 
-	if ((X_CNT_GOAL) != (X_CNT_POS))
+	if ((X_POS) != (X_GOAL))
 	{
 		digitalWrite(X_DIR_PIN, X_GOAL > X_POS);
+		if (X_STEP)
 		X_POS = ((X_GOAL > X_POS) ? X_POS + 1 : X_POS - 1);
 		X_CNT_POS++;
 		digitalWrite(X_STEP_PIN, (X_STEP = !X_STEP));
@@ -15,7 +16,6 @@ SIGNAL(TIMER1_COMPA_vect) {
 	else
 	{
 		X_MOVE_COM = true;
-		Y
 		set_step();
 	}
 
@@ -25,9 +25,10 @@ SIGNAL(TIMER1_COMPA_vect) {
 //y타이머
 SIGNAL(TIMER3_COMPA_vect) {
 
-	if ((Y_CNT_GOAL) != (Y_CNT_POS))
+	if ((Y_POS) != (Y_GOAL))
 	{
 		digitalWrite(Y_DIR_PIN, Y_GOAL > Y_POS);
+		if (Y_STEP)
 		Y_POS = ((Y_GOAL > Y_POS) ? Y_POS + 1 : Y_POS - 1);
 		Y_CNT_POS++;
 		digitalWrite(Y_STEP_PIN, (Y_STEP = !Y_STEP));

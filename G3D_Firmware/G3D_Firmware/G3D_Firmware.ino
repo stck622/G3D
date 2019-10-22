@@ -35,14 +35,15 @@ void setup() {
 		delayMicroseconds(400);
 	}
 
-	while (!endstop_getStatus('z')) {
-		digitalWrite(E1_STEP_PIN, (Z_STEP = !Z_STEP));
-		delayMicroseconds(400);
-	}
+	//while (!endstop_getStatus('z')) {
+	//	digitalWrite(E1_STEP_PIN, (Z_STEP = !Z_STEP));
+	//	delayMicroseconds(400);
+	//}
 
 	for (head = 0; head < 20; head++) {
 		gcode_parse();
 	}
+	
 
 }
 
@@ -56,8 +57,9 @@ void loop() {
 			Y_GOAL = 100*100;
 			break;
 		case 'b':
-			X_GOAL = 0;
-			Y_GOAL = 0;
+
+			TIMSK1 = 0x02;
+			TIMSK3 = 0x02;
 			break;
 		default:
 			break;

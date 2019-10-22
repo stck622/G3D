@@ -122,8 +122,10 @@ void Calc_Bresenham()
 				x += addX;
 				counter -= dy;
 			}
+
 			X_CNT_GOAL = x *2;
 			Y_CNT_GOAL = y *2;
+
 			X_GOAL = x;
 			Y_GOAL = y;
 			brm_i++;
@@ -142,7 +144,7 @@ void set_step() {
 			if (brm_com) {
 
 				if (stepbuffer.Back().X_STEP_CNT != 0 && stepbuffer.Back().Y_STEP_CNT != 0) {
-					Set_Bresenham(X_POS, Y_POS, stepbuffer.Back().X_STEP_CNT, stepbuffer.Back().Y_STEP_CNT);
+					Set_Bresenham(X_GOAL, Y_GOAL, stepbuffer.Back().X_STEP_CNT, stepbuffer.Back().Y_STEP_CNT);
 				}
 				else {
 					X_CNT_GOAL = stepbuffer.Back().X_STEP_CNT * 2;
