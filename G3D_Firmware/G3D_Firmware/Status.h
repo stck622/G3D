@@ -1,5 +1,9 @@
 #pragma once
 
+#define multi_speed 4
+
+volatile unsigned long header = 1;
+
 bool X_DIR = true;
 bool Y_DIR = true;
 bool Z_DIR = true;
@@ -40,8 +44,8 @@ int Y_SPEED = DEF_SPEED;
 int Z_SPEED = DEF_SPEED;
 int E_SPEED = DEF_SPEED;
 
-bool X_DIR_DEF = true;
-bool Y_DIR_DEF = true;
+bool X_DIR_DEF = false;
+bool Y_DIR_DEF = false;
 bool Z_DIR_DEF = true;
 bool E_DIR_DEF = true;
 

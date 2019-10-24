@@ -62,26 +62,28 @@ void step_init() {
 	pinMode(X_STEP_PIN, OUTPUT);
 	pinMode(X_DIR_PIN, OUTPUT);
 	pinMode(X_ENABLE_PIN, OUTPUT);
+	digitalWrite(X_DIR_PIN, X_DIR_DEF);
 
 	//X TIMER
 	TCCR1A = 0x00;
 	TCCR1B = 0x0A;
 	TCCR1C = 0x00;
 
-	OCR1A = 200;
+	OCR1A = 100;
 
 
 	//Y PIN
 	pinMode(Y_STEP_PIN, OUTPUT);
 	pinMode(Y_DIR_PIN, OUTPUT);
 	pinMode(Y_ENABLE_PIN, OUTPUT);
+	digitalWrite(Y_DIR_PIN, Y_DIR_DEF);
 
 	//Y TIMER
 	TCCR3A = 0x00;
 	TCCR3B = 0x0A;
 	TCCR3C = 0x00;
 
-	OCR3A = 200;
+	OCR3A = 100;
 
 
 	//Z1 STEP
@@ -99,7 +101,7 @@ void step_init() {
 	TCCR4B = 0x0A;
 	TCCR4C = 0x00;
 
-	OCR4A = 200;
+	OCR4A = 100;
 
 
 	//E0 STEP

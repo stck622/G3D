@@ -28,17 +28,17 @@ void setup() {
 
 	while (!endstop_getStatus('x')) {
 		digitalWrite(X_STEP_PIN, (X_STEP = !X_STEP));
-		delayMicroseconds(400);
+		delayMicroseconds(100);
 	}
 
 	while (!endstop_getStatus('y')) {
 		digitalWrite(Y_STEP_PIN, (Y_STEP = !Y_STEP));
-		delayMicroseconds(400);
+		delayMicroseconds(100);
 	}
 
 	while (!endstop_getStatus('z')) {
 		digitalWrite(E1_STEP_PIN, (Z_STEP = !Z_STEP));
-		delayMicroseconds(400);
+		delayMicroseconds(100);
 	}
 
 	for (head = 0; head < 20; head++) {
@@ -78,7 +78,7 @@ void loop() {
 		}
 	}
 
-	if ((stepbuffer.Size() < 30)) {
+	if ((stepbuffer.Size() < 10)) {
 		gcode_parse();
 	}
 
