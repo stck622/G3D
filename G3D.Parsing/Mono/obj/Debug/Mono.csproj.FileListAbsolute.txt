@@ -38,3 +38,13 @@ C:\Users\Jiwan\Documents\GitHub\G3D\G3D.Parsing\Mono\obj\Debug\Mono.csproj.Gener
 C:\Users\Jiwan\Documents\GitHub\G3D\G3D.Parsing\Mono\obj\Debug\Mono.csproj.CoreCompileInputs.cache
 C:\Users\Jiwan\Documents\GitHub\G3D\G3D.Parsing\Mono\obj\Debug\Mono.exe
 C:\Users\Jiwan\Documents\GitHub\G3D\G3D.Parsing\Mono\obj\Debug\Mono.pdb
+C:\Users\지완\Documents\GitHub\G3D_Desktop\Mono\bin\Debug\Mono.exe.config
+C:\Users\지완\Documents\GitHub\G3D_Desktop\Mono\bin\Debug\Mono.exe
+C:\Users\지완\Documents\GitHub\G3D_Desktop\Mono\bin\Debug\Mono.pdb
+C:\Users\지완\Documents\GitHub\G3D_Desktop\Mono\obj\Debug\Mono.csprojAssemblyReference.cache
+C:\Users\지완\Documents\GitHub\G3D_Desktop\Mono\obj\Debug\Mono.Form1.resources
+C:\Users\지완\Documents\GitHub\G3D_Desktop\Mono\obj\Debug\Mono.Properties.Resources.resources
+C:\Users\지완\Documents\GitHub\G3D_Desktop\Mono\obj\Debug\Mono.csproj.GenerateResource.cache
+C:\Users\지완\Documents\GitHub\G3D_Desktop\Mono\obj\Debug\Mono.csproj.CoreCompileInputs.cache
+C:\Users\지완\Documents\GitHub\G3D_Desktop\Mono\obj\Debug\Mono.exe
+C:\Users\지완\Documents\GitHub\G3D_Desktop\Mono\obj\Debug\Mono.pdb

@@ -97,9 +97,10 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btn_Print.BackColor = System.Drawing.SystemColors.Control;
+            this.btn_Print.Font = new System.Drawing.Font("D2Coding ligature", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btn_Print.Location = new System.Drawing.Point(3, 3);
             this.btn_Print.Name = "btn_Print";
-            this.btn_Print.Size = new System.Drawing.Size(93, 37);
+            this.btn_Print.Size = new System.Drawing.Size(92, 37);
             this.btn_Print.TabIndex = 2;
             this.btn_Print.Text = "출력";
             this.btn_Print.UseVisualStyleBackColor = false;
@@ -111,7 +112,8 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btn_Pause.BackColor = System.Drawing.SystemColors.Control;
-            this.btn_Pause.Location = new System.Drawing.Point(102, 3);
+            this.btn_Pause.Font = new System.Drawing.Font("D2Coding ligature", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btn_Pause.Location = new System.Drawing.Point(101, 3);
             this.btn_Pause.Name = "btn_Pause";
             this.btn_Pause.Size = new System.Drawing.Size(93, 37);
             this.btn_Pause.TabIndex = 3;
@@ -125,7 +127,8 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btn_Stop.BackColor = System.Drawing.SystemColors.Control;
-            this.btn_Stop.Location = new System.Drawing.Point(201, 3);
+            this.btn_Stop.Font = new System.Drawing.Font("D2Coding ligature", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btn_Stop.Location = new System.Drawing.Point(200, 3);
             this.btn_Stop.Name = "btn_Stop";
             this.btn_Stop.Size = new System.Drawing.Size(94, 37);
             this.btn_Stop.TabIndex = 4;
@@ -189,7 +192,7 @@
             // 
             this.progbar_ReTime.Location = new System.Drawing.Point(3, 27);
             this.progbar_ReTime.Name = "progbar_ReTime";
-            this.progbar_ReTime.Size = new System.Drawing.Size(292, 19);
+            this.progbar_ReTime.Size = new System.Drawing.Size(291, 19);
             this.progbar_ReTime.TabIndex = 9;
             // 
             // lb_ReTime
@@ -197,11 +200,12 @@
             this.lb_ReTime.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.lb_ReTime.AutoSize = true;
+            this.lb_ReTime.Font = new System.Drawing.Font("D2Coding ligature", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.lb_ReTime.ForeColor = System.Drawing.Color.Silver;
             this.lb_ReTime.Location = new System.Drawing.Point(3, 3);
             this.lb_ReTime.Margin = new System.Windows.Forms.Padding(3);
             this.lb_ReTime.Name = "lb_ReTime";
-            this.lb_ReTime.Size = new System.Drawing.Size(41, 18);
+            this.lb_ReTime.Size = new System.Drawing.Size(50, 18);
             this.lb_ReTime.TabIndex = 10;
             this.lb_ReTime.Text = "진행도";
             // 
@@ -522,17 +526,13 @@
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel4.Controls.Add(this.lb_ReTime, 0, 0);
             this.tableLayoutPanel4.Controls.Add(this.progbar_ReTime, 0, 1);
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(403, 27);
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(402, 27);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 2;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(298, 49);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(297, 49);
             this.tableLayoutPanel4.TabIndex = 14;
-            // 
-            // openGcode
-            // 
-            this.openGcode.FileName = "openGcode";
             // 
             // txtbox_file
             // 
@@ -584,11 +584,11 @@
             this.tableLayoutPanel6.Controls.Add(this.btn_Stop, 2, 0);
             this.tableLayoutPanel6.Controls.Add(this.btn_Print, 0, 0);
             this.tableLayoutPanel6.Controls.Add(this.btn_Pause, 1, 0);
-            this.tableLayoutPanel6.Location = new System.Drawing.Point(403, 82);
+            this.tableLayoutPanel6.Location = new System.Drawing.Point(402, 82);
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
             this.tableLayoutPanel6.RowCount = 1;
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel6.Size = new System.Drawing.Size(298, 43);
+            this.tableLayoutPanel6.Size = new System.Drawing.Size(297, 43);
             this.tableLayoutPanel6.TabIndex = 20;
             // 
             // combox_port
@@ -673,7 +673,7 @@
             // 
             // txtbox_gcode
             // 
-            this.txtbox_gcode.Location = new System.Drawing.Point(707, 54);
+            this.txtbox_gcode.Location = new System.Drawing.Point(707, 31);
             this.txtbox_gcode.Multiline = true;
             this.txtbox_gcode.Name = "txtbox_gcode";
             this.txtbox_gcode.ReadOnly = true;
@@ -682,7 +682,7 @@
             // 
             // txtbox_temp
             // 
-            this.txtbox_temp.Location = new System.Drawing.Point(707, 249);
+            this.txtbox_temp.Location = new System.Drawing.Point(707, 254);
             this.txtbox_temp.Multiline = true;
             this.txtbox_temp.Name = "txtbox_temp";
             this.txtbox_temp.Size = new System.Drawing.Size(221, 191);
