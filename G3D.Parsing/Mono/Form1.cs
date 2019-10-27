@@ -37,6 +37,12 @@ namespace Mono
         string path;
         private void openFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            float x_float = 0, y_float = 0, e_float = 0;
+            int g_int = 0, f_int = 0;
+            string gcodes;
+            int k = 0;
+            int count_g = 0, count_y = 0;
+
             openGcode.DefaultExt = "Gcode files";
             openGcode.Filter = "Gcode files (*.gcode*)|*.gcode*";
             openGcode.Multiselect = false;
@@ -90,6 +96,13 @@ namespace Mono
             //{
             //    CP2102.WriteLine("Reading Gcode");
 
+
+
+
+            //try
+            //{
+            //    CP2102.WriteLine("Reading Gcode");
+
             //}
             //catch
             //{
@@ -127,6 +140,7 @@ namespace Mono
                     Console.Write("G" + g_int.ToString());
                     txtbox_gcode.Text = g_char.ToString();
                     //CP2102.Write(g_int.ToString());
+                    CP2102.Write(g_int.ToString());
                     i += k + 1;
                     k = 0;
                 }
