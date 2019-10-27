@@ -673,7 +673,7 @@
             // 
             // txtbox_gcode
             // 
-            this.txtbox_gcode.Location = new System.Drawing.Point(707, 54);
+            this.txtbox_gcode.Location = new System.Drawing.Point(707, 31);
             this.txtbox_gcode.Multiline = true;
             this.txtbox_gcode.Name = "txtbox_gcode";
             this.txtbox_gcode.ReadOnly = true;
@@ -682,7 +682,7 @@
             // 
             // txtbox_temp
             // 
-            this.txtbox_temp.Location = new System.Drawing.Point(707, 249);
+            this.txtbox_temp.Location = new System.Drawing.Point(707, 254);
             this.txtbox_temp.Multiline = true;
             this.txtbox_temp.Name = "txtbox_temp";
             this.txtbox_temp.Size = new System.Drawing.Size(221, 191);

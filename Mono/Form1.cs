@@ -34,15 +34,9 @@ namespace Mono
             numericupdow_spd.Enabled = false;
 
         }
-
+        string path;
         private void openFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            float x_float = 0, y_float = 0, e_float = 0;
-            int g_int = 0, f_int = 0;
-            string path, gcodes;
-            int k = 0;
-            int count_x = 0, count_y = 0;
-
             openGcode.DefaultExt = "Gcode files";
             openGcode.Filter = "Gcode files (*.gcode*)|*.gcode*";
             openGcode.Multiselect = false;
@@ -56,7 +50,31 @@ namespace Mono
                 }
             }
 
-            path = this.txtbox_file.Text;
+            path = this.txtbox_file.Text;  
+
+            /*
+            try
+            {
+                if (serialPort1.ReadLine() == "OK")
+                    MessageBox.Show("Recived OK");
+                    //serialPort1.WriteLine(gcodes);
+            }
+            catch
+            {
+                MessageBox.Show("현재 포트가 연결되어 있지 않습니다.", "에러", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            */
+        }
+
+        private void btn_Print_Click(object sender, EventArgs e)
+        {
+            float x_float = 0, y_float = 0, e_float = 0;
+            int g_int = 0, f_int = 0;
+            string gcodes;
+            int k = 0;
+            int count_g = 0, count_y = 0;
+
             try
             {
                 gcodes = System.IO.File.ReadAllText(path);
@@ -67,32 +85,22 @@ namespace Mono
             }
             txtbox_temp.Text = gcodes;
 
+
             //try
             //{
-            //    CP2102.WriteLine(gcodes);
+            //    CP2102.WriteLine("Reading Gcode");
 
             //}
             //catch
             //{
             //    MessageBox.Show("현재 포트가 연결되어 있지 않습니다.", "에러", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //    return;
             //}
-
 
             txtbox_temp.Text = Convert.ToString(txtbox_temp.Lines.Length);  //gcode 줄 수 세고 텍스트 박스에 띄우기
             int leng = Convert.ToInt32(txtbox_temp.Text);
             int max = gcodes.Length;                                       //max에 gcode의 길이를 저장
-            progbar_ReTime.Maximum = max;                                  //프로그레스바 최대값을 gcode 줄 수로 설정
-
-            ////--------------------------------------------------------------
-            //string[] words = gcodes.Split('\n');
-
-            //foreach (var word in words)
-            //{
-            //    txtbox_gcode.Text = $"{word}";
-
-            //    progbar_ReTime.Value += 1;
-            //}
-            ////--------------------------------------------------------------
+            progbar_ReTime.Maximum = leng;                                  //프로그레스바 최대값을 gcode 줄 수로 설정
 
             for (int i = 0; i < max; i++)
             {
@@ -105,7 +113,10 @@ namespace Mono
                     for (int j = i + 1; j < max; j++)
                     {
                         if (gcodes[j] == ' ' || gcodes[j] == '\r')
+                        {
+                            count_g++;
                             break;
+                        }
                         else
                         {
                             g_char[k] = gcodes[j];
@@ -113,6 +124,9 @@ namespace Mono
                         }
                     }
                     g_int = Int32.Parse(new string(g_char));
+                    Console.Write("G" + g_int.ToString());
+                    txtbox_gcode.Text = g_char.ToString();
+                    //CP2102.Write(g_int.ToString());
                     i += k + 1;
                     k = 0;
                 }
@@ -125,7 +139,7 @@ namespace Mono
                     {
                         if (gcodes[j] == ' ' || gcodes[j] == '\r')
                         {
-                            count_x++;
+
                             break;
                         }
                         else
@@ -135,6 +149,7 @@ namespace Mono
                         }
                     }
                     x_float = Single.Parse(new string(x_char));
+                    Console.Write(" X" + x_float.ToString());
                     i += k + 1;
                     k = 0;
                 }
@@ -161,9 +176,13 @@ namespace Mono
                             k++;
                         }
                     }
+                    if (y_char[0] == '\0')
+                    {
+                        y_char[0] = '0';
+                    }
 
-                    Console.WriteLine("y_char: " + new string(y_char));
                     y_float = float.Parse(new string(y_char));
+                    Console.Write(" Y" + y_float.ToString());
                     i += k + 1;
                     k = 0;
                 }
@@ -182,6 +201,7 @@ namespace Mono
                         }
                     }
                     e_float = float.Parse(new string(e_char));
+                    Console.WriteLine(" E" + e_float.ToString());
                     i += k + 1;
                     k = 0;
                 }
@@ -200,42 +220,22 @@ namespace Mono
                             k++;
                         }
                     }
+                    if (!('0' <= f_char[0] && f_char[0] <= '9'))
+                        break;
                     f_int = Int32.Parse(new string(f_char));
+                    Console.WriteLine(" F" + f_int.ToString());
                     i += k + 1;
                     k = 0;
                 }
                 //--------------------------------------------------------------------
-                if (progbar_ReTime.Value == max)
+                if (progbar_ReTime.Value == leng)
                 {
                     progbar_ReTime.Value = 0;
                     MessageBox.Show("출력이 완료되었습니다.", "알림", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    break;
                 }
+                //txtbox_gcode.Text += "G = " + Convert.ToString(g_int) + ", X = " + Convert.ToString(x_float) + ", Y = " + Convert.ToString(y_float) + ", E = " + Convert.ToString(e_float) + ", F = " + Convert.ToString(f_int);
             }
-
-
-            //txtbox_gcode.Text = "G = " + Convert.ToString(g_int) + ", X = " + Convert.ToString(x_float) + ", Y = " + Convert.ToString(y_float) + ", E = " + Convert.ToString(e_float) + ", F = " + Convert.ToString(f_int);
-
-            /*
-            try
-            {
-                if (serialPort1.ReadLine() == "OK")
-                    MessageBox.Show("Recived OK");
-                    //serialPort1.WriteLine(gcodes);
-            }
-            catch
-            {
-                MessageBox.Show("현재 포트가 연결되어 있지 않습니다.", "에러", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            */
-        }
-
-
-
-
-        private void btn_Print_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void sendGcode(String gcode)
