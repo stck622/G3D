@@ -1,6 +1,6 @@
 #pragma once
 
-#define multi_speed 4
+#define multi_speed 2
 
 volatile unsigned long header = 1;
 
