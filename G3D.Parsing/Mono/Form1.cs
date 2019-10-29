@@ -86,7 +86,7 @@ namespace Mono
                 txtbox_temp.Text = Convert.ToString(txtbox_temp.Lines.Length);  //gcode 줄 수 세고 텍스트 박스에 띄우기
                 int leng = Convert.ToInt32(txtbox_temp.Text);
                 int max = gcodes.Length;                                       //max에 gcode의 길이를 저장
-                progbar_ReTime.Maximum = max;                                  //프로그레스바 최대값을 gcode 줄 수로 설정            
+                progbar_ReTime.Maximum = max;                                  //프로그레스바 최대값을 gcode 줄 수로 설정
                 txtbox_temp.Text = "max : " + max.ToString() + "\n leng : " + leng.ToString();
 
             }));
@@ -124,143 +124,6 @@ namespace Mono
             Printing = true;
             Print_thread = new Thread(new ThreadStart(Print));
             Print_thread.Start();
-            /*
-            for (int i = 0; i < max; i++)
-            {
-                progbar_ReTime.Value = i;
-                //--------------------------------------------------------------------G
-                if (gcodes[i] == 'G')
-                {
-                    char[] g_char = new char[5];
-
-                    for (int j = i + 1; j < max; j++)
-                    {
-                        if (gcodes[j] == ' ' || gcodes[j] == '\r')
-                        {
-                            count_g++;
-                            break;
-                        }
-                        else
-                        {
-                            g_char[k] = gcodes[j];
-                            k++;
-                        }
-                    }
-                    g_int = Int32.Parse(new string(g_char));                    
-                    Console.Write("G" + g_int.ToString());
-                    i += k + 1;
-                    k = 0;
-                }
-                //--------------------------------------------------------------------X
-                if (gcodes[i] == 'X')
-                {
-                    char[] x_char = new char[10];
-
-                    for (int j = i + 1; j < max; j++)
-                    {
-                        if (gcodes[j] == ' ' || gcodes[j] == '\r')
-                        {
-
-                            break;
-                        }
-                        else
-                        {
-                            x_char[k] = gcodes[j];
-                            k++;
-                        }
-                    }
-                    x_float = Single.Parse(new string(x_char));
-                    Console.Write(" X" + x_float.ToString());
-                    i += k + 1;
-                    k = 0;
-                }
-                //--------------------------------------------------------------------Y
-                if (gcodes[i] == 'Y')
-                {
-                    char[] y_char = new char[10];
-
-                    for (int j = i + 1; j < max; j++)
-                    {
-                        if (gcodes[j] == '\0')
-                        {
-                            Console.WriteLine("gcodes[j] blank");
-                        }
-
-                        if (gcodes[j] == ' ' || gcodes[j] == '\r')
-                        {
-                            count_y++;
-                            break;
-                        }
-                        else
-                        {
-                            y_char[k] = gcodes[j];
-                            k++;
-                        }
-                    }
-                    if (y_char[0] == '\0')
-                    {
-                        y_char[0] = '0';
-                    }
-
-                    y_float = float.Parse(new string(y_char));
-                    Console.Write(" Y" + y_float.ToString());
-                    i += k + 1;
-                    k = 0;
-                }
-                //--------------------------------------------------------------------E
-                if (gcodes[i] == 'E')
-                {
-                    char[] e_char = new char[10];
-                    for (int j = i + 1; j < max; j++)
-                    {
-                        if (gcodes[j] == ' ' || gcodes[j] == '\r')
-                            break;
-                        else
-                        {
-                            e_char[k] = gcodes[j];
-                            k++;
-                        }
-                    }
-                    e_float = float.Parse(new string(e_char));
-                    Console.WriteLine(" E" + e_float.ToString());
-                    i += k + 1;
-                    k = 0;
-                }
-                //--------------------------------------------------------------------F
-                if (gcodes[i] == 'F')
-                {
-                    char[] f_char = new char[10];
-
-                    for (int j = i + 1; j < max; j++)
-                    {
-                        if (gcodes[j] == ' ' || gcodes[j] == '\r')
-                            break;
-                        else
-                        {
-                            f_char[k] = gcodes[j];
-                            k++;
-                        }
-                    }
-                    if (!('0' <= f_char[0] && f_char[0] <= '9'))    //F 뒤에 있는 문자가 정수라면
-                        break;
-                    f_int = Int32.Parse(new string(f_char));
-                    Console.WriteLine(" F" + f_int.ToString());
-                    i += k + 1;
-                    k = 0;
-                }
-                //--------------------------------------------------------------------
-                txtbox_gcode.Text = ("G" + g_int + " X" + x_float + " Y" + y_float + " E" + e_float + " F" + f_int + " count " + i + " bar " + progbar_ReTime.Value);
-                if (progbar_ReTime.Value == max)
-                {
-                    progbar_ReTime.Value = 0;
-                    MessageBox.Show("출력이 완료되었습니다.", "알림", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    break;
-                }
-                
-                
-                //txtbox_gcode.Text += "G = " + Convert.ToString(g_int) + ", X = " + Convert.ToString(x_float) + ", Y = " + Convert.ToString(y_float) + ", E = " + Convert.ToString(e_float) + ", F = " + Convert.ToString(f_int);
-            }
-            */
         }
 
         private void sendGcode(String gcode)
@@ -384,7 +247,25 @@ namespace Mono
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Print_thread.Abort();
+            try
+            {
+                Print_thread.Abort();
+            }
+            catch
+            {
+                return;
+            }
+            
+        }
+
+        private void helpToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("연결할 포트를 선택한 뒤, 보드레이트를 설정하세요. 그 다음 출력할 파일을 상단의 파일 탭의 열기를 클릭해 선택하고, 출력 버튼을 누르면 출력이 됩니다.", "도움말", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void infoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("G3D 프린터를 이용해 주셔서 감사합니다. \r\n오류가 발생하면 스태프에게 알려주시길 바랍니다.", "정보", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }
