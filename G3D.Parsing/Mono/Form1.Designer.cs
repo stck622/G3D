@@ -612,6 +612,7 @@
             this.combox_port.Name = "combox_port";
             this.combox_port.Size = new System.Drawing.Size(76, 20);
             this.combox_port.TabIndex = 21;
+            this.combox_port.Text = "COM5";
             this.combox_port.SelectedIndexChanged += new System.EventHandler(this.combox_port_SelectedIndexChanged);
             // 
             // lb_baudrate
@@ -648,6 +649,7 @@
             this.combo_baudrate.Name = "combo_baudrate";
             this.combo_baudrate.Size = new System.Drawing.Size(115, 20);
             this.combo_baudrate.TabIndex = 23;
+            this.combo_baudrate.Text = "9600";
             this.combo_baudrate.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // tableLayoutPanel3
@@ -707,6 +709,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = " 삼디 출력기";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.groupBox1.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);

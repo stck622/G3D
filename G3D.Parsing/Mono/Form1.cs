@@ -8,11 +8,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Threading;
 
 namespace Mono
 {
     public partial class Form1 : Form
     {
+        Control[] gcodeControls;
+
         public Form1()
         {
             InitializeComponent();
@@ -20,7 +23,11 @@ namespace Mono
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            //combox_port.DataSource = serialPort1.GetPortNames();
+            gcodeControls =
+            new Control[] {
+                btn_center, btn_right, btn_left, btn_down, btn_up, btn_Print
+            };
+
             btn_center.Enabled = false;
             btn_right.Enabled = false;
             btn_left.Enabled = false;
@@ -37,11 +44,7 @@ namespace Mono
         string path;
         private void openFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            float x_float = 0, y_float = 0, e_float = 0;
-            int g_int = 0, f_int = 0;
             string gcodes;
-            int k = 0;
-            int count_g = 0, count_y = 0;
 
             openGcode.DefaultExt = "Gcode files";
             openGcode.Filter = "Gcode files (*.gcode*)|*.gcode*";
@@ -56,30 +59,16 @@ namespace Mono
                 }
             }
 
-            path = this.txtbox_file.Text;  
-
-            /*
-            try
-            {
-                if (serialPort1.ReadLine() == "OK")
-                    MessageBox.Show("Recived OK");
-                    //serialPort1.WriteLine(gcodes);
-            }
-            catch
-            {
-                MessageBox.Show("현재 포트가 연결되어 있지 않습니다.", "에러", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            */
+            path = this.txtbox_file.Text;
         }
 
-        private void btn_Print_Click(object sender, EventArgs e)
+        Thread Print_thread;
+        bool Printing = false;
+
+        
+        private void Print()
         {
-            float x_float = 0, y_float = 0, e_float = 0;
-            int g_int = 0, f_int = 0;
             string gcodes;
-            int k = 0;
-            int count_g = 0, count_y = 0;
 
             try
             {
@@ -89,35 +78,56 @@ namespace Mono
             {
                 return;
             }
-            txtbox_temp.Text = gcodes;
+
+            Invoke(new MethodInvoker(delegate()
+            {
+                txtbox_temp.Text = gcodes;
+
+                txtbox_temp.Text = Convert.ToString(txtbox_temp.Lines.Length);  //gcode 줄 수 세고 텍스트 박스에 띄우기
+                int leng = Convert.ToInt32(txtbox_temp.Text);
+                int max = gcodes.Length;                                       //max에 gcode의 길이를 저장
+                progbar_ReTime.Maximum = max;                                  //프로그레스바 최대값을 gcode 줄 수로 설정            
+                txtbox_temp.Text = "max : " + max.ToString() + "\n leng : " + leng.ToString();
+
+            }));
+            
+            try
+            {
+                foreach (string line in gcodes.Replace('\r','\n').Split('\n'))
+                {
+                    CP2102.Write(line);
+                }
+            }
+            catch
+            {
+                MessageBox.Show("현재 포트가 연결되어 있지 않습니다.", "에러", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
 
-            //try
-            //{
-            //    CP2102.WriteLine("Reading Gcode");
+            Invoke(new MethodInvoker(delegate ()
+            {
+                foreach (Control ctrl in gcodeControls)
+                {
+                    ctrl.Enabled = true;
+                }
+            }));
+        }
 
+        private void btn_Print_Click(object sender, EventArgs e)
+        {
+            foreach (Control ctrl in gcodeControls)
+            {
+                ctrl.Enabled = false;
+            }
 
-
-
-            //try
-            //{
-            //    CP2102.WriteLine("Reading Gcode");
-
-            //}
-            //catch
-            //{
-            //    MessageBox.Show("현재 포트가 연결되어 있지 않습니다.", "에러", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //    return;
-            //}
-
-            txtbox_temp.Text = Convert.ToString(txtbox_temp.Lines.Length);  //gcode 줄 수 세고 텍스트 박스에 띄우기
-            int leng = Convert.ToInt32(txtbox_temp.Text);
-            int max = gcodes.Length;                                       //max에 gcode의 길이를 저장
-            progbar_ReTime.Maximum = leng;                                  //프로그레스바 최대값을 gcode 줄 수로 설정
-
+            Printing = true;
+            Print_thread = new Thread(new ThreadStart(Print));
+            Print_thread.Start();
+            /*
             for (int i = 0; i < max; i++)
             {
-                progbar_ReTime.Value += 1;
+                progbar_ReTime.Value = i;
                 //--------------------------------------------------------------------G
                 if (gcodes[i] == 'G')
                 {
@@ -136,11 +146,8 @@ namespace Mono
                             k++;
                         }
                     }
-                    g_int = Int32.Parse(new string(g_char));
+                    g_int = Int32.Parse(new string(g_char));                    
                     Console.Write("G" + g_int.ToString());
-                    txtbox_gcode.Text = g_char.ToString();
-                    //CP2102.Write(g_int.ToString());
-                    CP2102.Write(g_int.ToString());
                     i += k + 1;
                     k = 0;
                 }
@@ -234,7 +241,7 @@ namespace Mono
                             k++;
                         }
                     }
-                    if (!('0' <= f_char[0] && f_char[0] <= '9'))
+                    if (!('0' <= f_char[0] && f_char[0] <= '9'))    //F 뒤에 있는 문자가 정수라면
                         break;
                     f_int = Int32.Parse(new string(f_char));
                     Console.WriteLine(" F" + f_int.ToString());
@@ -242,14 +249,18 @@ namespace Mono
                     k = 0;
                 }
                 //--------------------------------------------------------------------
-                if (progbar_ReTime.Value == leng)
+                txtbox_gcode.Text = ("G" + g_int + " X" + x_float + " Y" + y_float + " E" + e_float + " F" + f_int + " count " + i + " bar " + progbar_ReTime.Value);
+                if (progbar_ReTime.Value == max)
                 {
                     progbar_ReTime.Value = 0;
                     MessageBox.Show("출력이 완료되었습니다.", "알림", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     break;
                 }
+                
+                
                 //txtbox_gcode.Text += "G = " + Convert.ToString(g_int) + ", X = " + Convert.ToString(x_float) + ", Y = " + Convert.ToString(y_float) + ", E = " + Convert.ToString(e_float) + ", F = " + Convert.ToString(f_int);
             }
+            */
         }
 
         private void sendGcode(String gcode)
@@ -300,7 +311,28 @@ namespace Mono
 
         private void btn_Stop_Click(object sender, EventArgs e)
         {
-            CP2102.WriteLine("Stop Print");
+            try
+            {
+                Print_thread.Abort();
+            }
+            catch
+            {
+                if (MessageBox.Show("출력을 정지할 수 없습니다.\n출력을 정지하려면 프로그램을 강제종료 하시겠습니까?", "예기치 못한 오류", MessageBoxButtons.YesNo, MessageBoxIcon.Error) == DialogResult.Yes)
+                {
+                    this.Close();
+                }
+                else
+                {
+                    return;
+                }
+            }
+            
+            foreach (Control ctrl in gcodeControls)
+            {
+                ctrl.Enabled = true;
+            }
+
+
         }
 
         private void combox_port_SelectedIndexChanged(object sender, EventArgs e)
@@ -348,6 +380,11 @@ namespace Mono
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             CP2102.BaudRate = Convert.ToInt32(combo_baudrate.Text);
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Print_thread.Abort();
         }
     }
 }
