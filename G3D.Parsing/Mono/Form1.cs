@@ -134,26 +134,55 @@ namespace Mono
 
         private void btn_left_Click(object sender, EventArgs e)
         {
-            sendGcode("G0 X300 Y0 F");
-            //serialPort1.WriteLine("a");
+            try
+            {
+                CP2102.Write("a");
+            }
+            catch
+            {
+                MessageBox.Show("현재 포트가 연결되어 있지 않습니다.", "에러", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            
         }
 
         private void btn_right_Click(object sender, EventArgs e)
         {
-            sendGcode("G0 X-300 Y0 F");
-            //serialPort1.WriteLine("d");
+            try
+            {
+                CP2102.Write("d");
+            }
+            catch
+            {
+                MessageBox.Show("현재 포트가 연결되어 있지 않습니다.", "에러", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
         }
 
         private void btn_down_Click(object sender, EventArgs e)
         {
-            sendGcode("G0 X0 Y300 F");
-            //serialPort1.WriteLine("s");
+            try
+            {
+                CP2102.Write("s");
+            }
+            catch
+            {
+                MessageBox.Show("현재 포트가 연결되어 있지 않습니다.", "에러", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
         }
 
         private void btn_up_Click(object sender, EventArgs e)
         {
-            sendGcode("G0 X0 Y-300 F");
-            //serialPort1.WriteLine("w");
+            try
+            {
+                CP2102.Write("w");
+            }
+            catch
+            {
+                MessageBox.Show("현재 포트가 연결되어 있지 않습니다.", "에러", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
         }
 
         private void btn_center_Click(object sender, EventArgs e)
