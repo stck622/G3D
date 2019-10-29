@@ -88,13 +88,8 @@ void step_init() {
 
 	//Z1 STEP
 	pinMode(Z_STEP_PIN, OUTPUT);
-	pinMode(Y_DIR_PIN, OUTPUT);
-	pinMode(Y_ENABLE_PIN, OUTPUT);
-
-	//Z2 STEP (E1)
-	pinMode(E1_STEP_PIN, OUTPUT);
-	pinMode(E1_DIR_PIN, OUTPUT);
-	pinMode(E1_ENABLE_PIN, OUTPUT);
+	pinMode(Z_DIR_PIN, OUTPUT);
+	pinMode(Z_ENABLE_PIN, OUTPUT);
 
 	//Z TIMER
 	TCCR4A = 0x00;

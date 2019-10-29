@@ -164,7 +164,7 @@
   </ImportGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties config.Debug.customdebug_mega_atmega2560_debugger_type="none" arduino.upload.port="COM6" />
+      <UserProperties config.Debug.customdebug_mega_atmega2560_debugger_type="none" arduino.upload.port="COM5" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

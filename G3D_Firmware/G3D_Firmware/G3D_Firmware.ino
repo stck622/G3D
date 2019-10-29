@@ -22,7 +22,7 @@ void setup() {
 	sd_init();
 
 
-	sd_open_file("sample2.txt");
+	sd_open_file("sample3.txt");
 
 	Serial.println("read");
 
@@ -36,25 +36,25 @@ void setup() {
 		delayMicroseconds(100);
 	}
 
+	digitalWrite(Z_DIR_PIN, Z_DIR_DEF);
 	while (!endstop_getStatus('z')) {
-		digitalWrite(E1_STEP_PIN, (Z_STEP = !Z_STEP));
+		digitalWrite(Z_STEP_PIN, (Z_STEP = !Z_STEP));
 		delayMicroseconds(100);
 	}
 
 	for (head = 0; head < 20; head++) {
 		gcode_parse();
 	}
-	
 
 }
 
 void loop() {
 
-	//Serial.println(analogRead(TEMP_0_PIN));
-	if (analogRead(TEMP_0_PIN) > 40) {
+	Serial.println(analogRead(TEMP_0_PIN));
+	if (analogRead(TEMP_0_PIN) > 50) {
 		digitalWrite(HEATER_0_PIN,HIGH);
 	}
-	else if (analogRead(TEMP_0_PIN) < 30) {
+	else if (analogRead(TEMP_0_PIN) < 40) {
 		digitalWrite(HEATER_0_PIN, LOW);
 	}
 
@@ -64,14 +64,23 @@ void loop() {
 		case 'a':
 			OCR5A = 8000;
 			TIMSK5 = 0x02;
-			E_GOAL = 100 * 10;
+			E_GOAL += 100 * 10;
 			break;
 		case 'b':
 
 			TIMSK1 = 0x02;
 			TIMSK3 = 0x02;
+			TIMSK4 = 0x02;
 			TIMSK5 = 0x02;
-
+		break;
+		case 'c':
+			OCR4A = 2000;
+			TIMSK4 = 0x02;
+			Z_GOAL += 100 * 10;
+			break;
+		case 'd':
+			digitalWrite(X_ENABLE_PIN,HIGH);
+			digitalWrite(Y_ENABLE_PIN, HIGH);
 			break;
 		default:
 			break;

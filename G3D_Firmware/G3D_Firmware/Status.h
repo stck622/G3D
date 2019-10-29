@@ -46,7 +46,7 @@ int E_SPEED = DEF_SPEED;
 
 bool X_DIR_DEF = false;
 bool Y_DIR_DEF = false;
-bool Z_DIR_DEF = true;
+bool Z_DIR_DEF = false;
 bool E_DIR_DEF = true;
 
 #define X_STEP_PIN         54
@@ -87,7 +87,8 @@ bool E_DIR_DEF = true;
 #define PS_ON_PIN          12
 #define KILL_PIN           -1
 
-#define HEATER_0_PIN       10
+//#define HEATER_0_PIN       10
+#define HEATER_0_PIN       4
 #define HEATER_1_PIN       8
 #define TEMP_0_PIN          13   // ANALOG NUMBERING
 #define TEMP_1_PIN          14   // ANALOG NUMBERING

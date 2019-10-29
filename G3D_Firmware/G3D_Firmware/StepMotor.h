@@ -39,31 +39,23 @@ SIGNAL(TIMER3_COMPA_vect) {
 
 }
 
-////Z타이머
-//SIGNAL(TIMER4_COMPA_vect) {
-//
-//	if (Z_GOAL != Z_POS)
-//	{
-//		if (endstop_getStatus('z') && (Z_DIR != Z_DIR_DEF)) {
-//			Z_POS = 0;
-//			TIMSK4 = 0X00;
-//			Z_GOAL = 0;
-//			Z_CNT = 0;
-//		}
-//		else {
-//			Z_STEP = !Z_STEP;
-//			digitalWrite(E1_STEP_PIN, Z_STEP);
-//			if (Z_STEP) {
-//				//Z_CNT++;
-//			}
-//		}
-//	}
-//	else
-//	{
-//		TIMSK4 = 0x00;
-//	}
-//
-//}
+//Z타이머
+SIGNAL(TIMER4_COMPA_vect) {
+
+	if ((Z_POS) != (Z_GOAL))
+	{
+		digitalWrite(Z_DIR_PIN, Z_GOAL > Z_POS);
+		if (Z_STEP)
+			Z_POS = ((Z_GOAL > Z_POS) ? Z_POS + 1 : Z_POS - 1);
+		digitalWrite(Z_STEP_PIN, (Z_STEP = !Z_STEP));
+	}
+	else
+	{
+		Z_MOVE_COM = true;
+		set_step();
+	}
+
+}
 
 //E0타이머
 SIGNAL(TIMER5_COMPA_vect) {
