@@ -77,6 +77,7 @@
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.txtbox_gcode = new System.Windows.Forms.TextBox();
             this.txtbox_temp = new System.Windows.Forms.TextBox();
+            this.btn_enable = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericupdow_dstc)).BeginInit();
@@ -692,12 +693,23 @@
             this.txtbox_temp.Size = new System.Drawing.Size(221, 191);
             this.txtbox_temp.TabIndex = 26;
             // 
+            // btn_enable
+            // 
+            this.btn_enable.Location = new System.Drawing.Point(474, 131);
+            this.btn_enable.Name = "btn_enable";
+            this.btn_enable.Size = new System.Drawing.Size(78, 26);
+            this.btn_enable.TabIndex = 27;
+            this.btn_enable.Text = "버튼 활성화";
+            this.btn_enable.UseVisualStyleBackColor = true;
+            this.btn_enable.Click += new System.EventHandler(this.btn_enable_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DarkGreen;
             this.ClientSize = new System.Drawing.Size(940, 452);
+            this.Controls.Add(this.btn_enable);
             this.Controls.Add(this.txtbox_temp);
             this.Controls.Add(this.txtbox_gcode);
             this.Controls.Add(this.tableLayoutPanel3);
@@ -783,6 +795,7 @@
         private System.Windows.Forms.NumericUpDown numericupdow_nozTem;
         private System.Windows.Forms.TextBox txtbox_gcode;
         private System.Windows.Forms.TextBox txtbox_temp;
+        private System.Windows.Forms.Button btn_enable;
     }
 }
 

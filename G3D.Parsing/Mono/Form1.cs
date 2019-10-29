@@ -25,7 +25,7 @@ namespace Mono
         {
             gcodeControls =
             new Control[] {
-                btn_center, btn_right, btn_left, btn_down, btn_up, btn_Print
+                btn_center, btn_right, btn_left, btn_down, btn_up, btn_Print, btn_application, numericupdow_dstc, numericupdow_spd
             };
 
             btn_center.Enabled = false;
@@ -44,8 +44,6 @@ namespace Mono
         string path;
         private void openFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string gcodes;
-
             openGcode.DefaultExt = "Gcode files";
             openGcode.Filter = "Gcode files (*.gcode*)|*.gcode*";
             openGcode.Multiselect = false;
@@ -64,10 +62,10 @@ namespace Mono
 
         Thread Print_thread;
         bool Printing = false;
-
         
         private void Print()
         {
+            int max;
             string gcodes;
 
             try
@@ -79,30 +77,35 @@ namespace Mono
                 return;
             }
 
+
             Invoke(new MethodInvoker(delegate()
             {
                 txtbox_temp.Text = gcodes;
 
                 txtbox_temp.Text = Convert.ToString(txtbox_temp.Lines.Length);  //gcode 줄 수 세고 텍스트 박스에 띄우기
                 int leng = Convert.ToInt32(txtbox_temp.Text);
-                int max = gcodes.Length;                                       //max에 gcode의 길이를 저장
+                max = gcodes.Length;                                       //max에 gcode의 길이를 저장
                 progbar_ReTime.Maximum = max;                                  //프로그레스바 최대값을 gcode 줄 수로 설정
                 txtbox_temp.Text = "max : " + max.ToString() + "\n leng : " + leng.ToString();
 
             }));
             
-            try
-            {
-                foreach (string line in gcodes.Replace('\r','\n').Split('\n'))
+            //try
+            //{
+                foreach (string line in gcodes.Replace('\r','\n').Split('\n'))  //gcode를 시리얼로 한 줄씩 보낸다.
                 {
+                    Invoke(new MethodInvoker(delegate ()
+                    {
+                        progbar_ReTime.Value += 1;
+                    }));
                     CP2102.Write(line);
                 }
-            }
-            catch
-            {
-                MessageBox.Show("현재 포트가 연결되어 있지 않습니다.", "에러", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
+            //}
+            //catch
+            //{
+            //    MessageBox.Show("현재 포트가 연결되어 있지 않습니다.", "에러", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //    return;
+            //}
 
 
             Invoke(new MethodInvoker(delegate ()
@@ -232,7 +235,7 @@ namespace Mono
             CP2102.Close();
 
             CP2102.PortName = combox_port.Text;
-            //serialPort1.Open();
+
             try
             {
                 CP2102.Open();
@@ -295,6 +298,14 @@ namespace Mono
         private void infoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MessageBox.Show("G3D 프린터를 이용해 주셔서 감사합니다. \r\n오류가 발생하면 스태프에게 알려주시길 바랍니다.", "정보", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void btn_enable_Click(object sender, EventArgs e)
+        {
+            foreach (Control ctrl in gcodeControls)
+            {
+                ctrl.Enabled = true;
+            }
         }
     }
 }
