@@ -98,7 +98,11 @@ namespace Mono
                     {
                         progbar_ReTime.Value += 1;
                     }));
-                    CP2102.Write(line);
+                Invoke(new MethodInvoker(delegate ()
+                {
+                    lb_xy.Text = line;
+                }));
+                CP2102.Write(line);
                 }
             //}
             //catch
